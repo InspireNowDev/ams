@@ -1,5 +1,6 @@
 <template>
   <h1>About View page</h1>
+  <p></p>
 </template>
 
 <script>
