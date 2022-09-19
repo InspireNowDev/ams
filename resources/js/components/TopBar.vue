@@ -61,7 +61,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      navElements: ["dashboard", "about", "login", "sign-up"],
+      navElements: ["dashboard", "about", "login", "sign-up","Student"],
       activeTab: "dashboard",
     };
   },
