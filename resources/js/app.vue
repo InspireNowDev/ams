@@ -1,50 +1,45 @@
 <template>
-  <div>
-    <Topbar />
-    <div class="container" :class="screenMode" >
+  <div class="app-container">
+    <Getter />
+    <Topbar v-if="!userLoggedIn" />
+    <DashBar v-else />
+    <div class="container">
       <router-view />
     </div>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+//import { mapState } from "vuex";
 import Topbar from "./components/TopBar.vue";
+import DashBar from "./components/DashboardTopbar.vue";
+import Getter from "./components/GetterComponent.vue";
 export default {
   components: {
     Topbar,
+    DashBar,
+    Getter,
   },
   data() {
     return {};
   },
-  computed: mapState({
-    screenMode: (state) => state.screenMode,
-  }),
+  computed: {
+    userLoggedIn() {
+      return this.$store.state.userLoggedIn;
+    },
+  },
 };
 </script>
+
 <style scoped>
+.app-container {
+  background-color: rgb(240 240 240);
+}
 .container {
-  width: 1280px;
   margin: 0 auto;
   padding: 10px 20px;
-  background-color: rgb(236, 236, 236);
-  min-height: calc(100vh - 44px);
+  min-height: calc(100vh - 75px);
   text-align: center;
-}
-.container.dark-mode {
-  width: 1280px;
-  margin: 0 auto;
-  padding: 10px 20px;
-  background-color:blue;
-  min-height: calc(100vh - 44px);
-  text-align: center;
-}
-.dark-theme {
-  background-color: black;
-  color: white;
-}
-.light-theme {
-  background-color: white;
-  color: black;
+  width: 100%;
 }
 </style>
 

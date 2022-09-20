@@ -1,17 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Hellowrld from '../pages/Hello.vue'
 import Login from "../pages/Login.vue"
-const routes = [
 
+const routes = [
     {
-        path: '/dashboard',
-        name: 'hello',
-        component: Hellowrld
+        path: '/forgot-password',
+        name: 'forgot-password',
+        component: () => import("@/pages/ForgotPassword.vue")
     },
     {
-        path: '/about',
+        path: '/CRUD',
         name: 'about',
-        component: () => import("@/pages/About.vue")
+        component: () => import("@/pages/CRUD.vue")
         // routing can also be done this way 
     },
     {
@@ -23,6 +22,11 @@ const routes = [
         path: '/sign-up',
         name: 'signup',
         component: () => import("@/pages/SignUp.vue")
+    },
+    {
+        path: '/welcome',
+        name: 'welcome',
+        component: () => import("@/pages/Welcome.vue")
     },
     //reroutes to page not found page when the link does not exist 
     {
