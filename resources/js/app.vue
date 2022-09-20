@@ -31,9 +31,6 @@ export default {
 </script>
 
 <style scoped>
-.app-container {
-  background-color: rgb(240 240 240);
-}
 .container {
   margin: 0 auto;
   padding: 10px 20px;

@@ -62,7 +62,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      navElements: ["if you see this menu it means you are logged in"],
+      navElements: ["if you see this menu it means you are logged in", "CRUD"],
       activeTab: "dashboard",
     };
   },

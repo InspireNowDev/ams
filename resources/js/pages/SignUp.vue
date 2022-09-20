@@ -26,7 +26,7 @@
             "
             type="text"
             placeholder="Firstname"
-            v-model="formData.FirstName"
+            v-model="formData.firstname"
             required
           />
         </div>
@@ -52,7 +52,7 @@
             "
             type="text"
             placeholder="Last name"
-            v-model="formData.Lastname"
+            v-model="formData.lastname"
             required
           />
         </div>
@@ -94,7 +94,7 @@
             required
           />
           <label for="checkbox" class="text-gray-700 text-sm font-bold mb-2">
-            Accept terms?? {{ formData.agree }}</label
+            Accept terms??</label
           >
         </div>
         <div class="flex items-center justify-center">
@@ -123,36 +123,46 @@
   </div>
 </template>
 <script>
+import { useRouter } from "vue-router";
 export default {
   data() {
     return {
       formData: {
-        FirstName: "",
-        LastName: "",
+        firstname: "",
+        lastname: "",
         EmailAddress: "",
         password: "",
         agree: false,
       },
       usersData: [],
+      myRouter: useRouter(),
+      LVresponse: "",
     };
   },
   methods: {
     async submitForm() {
-      const { data } = await axios.post("http://localhost:3000/users", {
-        FirstName: this.formData.FirstName,
-        LastName: this.formData.LastName,
-        EmailAddress: this.formData.EmailAddress,
-        password: this.formData.password,
-      });
-      this.userData = [...this.users, data];
-      this.$store.state.users = [...this.users, data];
-      this.formData.FirstName = "";
-      this.formData.LastName = "";
-      this.formData.EmailAddress = "";
-      this.formData.agree = false;
+      console.log(this.firstname);
+      let currentObj = this;
+      await axios
+        .post("/api/profiles", {
+          firstname: this.formData.firstname,
+          lastname: this.formData.lastname,
+          // EmailAddress: this.formData.EmailAddress,
+          // password: this.formData.password,
+        })
+        .then(
+          (response) => {
+            console.log("success");
+          },
+          (error) => {
+            console.log("error");
+          }
+        );
+
+      this.myRouter.push("set-password");
     },
     redirectToLogin() {
-      this.router.push("login");
+      this.myRouter.push("login");
     },
   },
 };

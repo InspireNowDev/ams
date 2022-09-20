@@ -3,17 +3,6 @@ import Login from "../pages/Login.vue"
 
 const routes = [
     {
-        path: '/forgot-password',
-        name: 'forgot-password',
-        component: () => import("@/pages/ForgotPassword.vue")
-    },
-    {
-        path: '/CRUD',
-        name: 'about',
-        component: () => import("@/pages/CRUD.vue")
-        // routing can also be done this way 
-    },
-    {
         path: '/login',
         name: 'login',
         component: Login
@@ -24,9 +13,25 @@ const routes = [
         component: () => import("@/pages/SignUp.vue")
     },
     {
+        path: '/forgot-password',
+        name: 'forgot-password',
+        component: () => import("@/pages/ForgotPassword.vue")
+    },
+    {
+        path: '/set-password',
+        name: 'set-password',
+        component: () => import("@/pages/SetPassword.vue")
+    },
+    {
         path: '/welcome',
         name: 'welcome',
         component: () => import("@/pages/Welcome.vue")
+    },
+    {
+        path: '/CRUD',
+        name: 'about',
+        component: () => import("@/pages/CRUD.vue")
+        // routing can also be done this way 
     },
     //reroutes to page not found page when the link does not exist 
     {

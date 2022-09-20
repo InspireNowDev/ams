@@ -122,10 +122,14 @@ export default {
         "and password : ",
         this.credentials.password
       );
-      this.$store.state.userLoggedIn = true;
+      
+      this.$store.state.userLoggedIn;
       this.$store.state.userName = this.credentials.username;
-      this.myRouter.push("welcome");
+       this.myRouter.push("welcome");
     },
+  },
+  created() {
+    this.userLogindata = this.$store.state.users;
   },
 };
 </script>

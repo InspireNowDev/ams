@@ -69,30 +69,26 @@
         class="lg:flex lg:flex-grow items-center"
       >
         <ul class="flex flex-col lg:flex-row list-none ml-auto">
-          <li
-            class="nav-item"
+          <router-link
+            class="
+              px-3
+              py-2
+              flex
+              items-center
+              text-xs
+              uppercase
+              font-bold
+              leading-snug
+              text-white
+              hover:opacity-75
+              nav-item
+            "
             v-for="navElement in navElements"
             :key="navElement"
+            :to="navElement"
           >
-            <router-link
-              class="
-                px-3
-                py-2
-                flex
-                items-center
-                text-xs
-                uppercase
-                font-bold
-                leading-snug
-                text-white
-                hover:opacity-75
-              "
-              href="#pablo"
-              :to="navElement"
-            >
-              <span class="ml-2">{{ navElement }}</span>
-            </router-link>
-          </li>
+            <span class="ml-2">{{ navElement }}</span>
+          </router-link>
         </ul>
       </div>
     </div>
@@ -104,7 +100,7 @@ export default {
   data() {
     return {
       showMenu: false,
-      navElements: ["login", "sign-up", "CRUD"],
+      navElements: ["login", "sign-up"],
       activeTab: "dashboard",
     };
   },
