@@ -5,8 +5,8 @@ module.exports = {
   ],
   theme: {
     extend: {
-      transformOrigin: {
-        "0": "0%",
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif'] 
       },
     },
   },

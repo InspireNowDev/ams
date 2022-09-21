@@ -10,13 +10,14 @@
         <div class="space-y-6 rounded-md">
 
           <!-- https://mui.com/material-ui/react-text-field/ -->
-          <div class="floating relative">
-                <input id="email" type="email" name="email" placeholder=" " autocomplete="email" required="" class="block p-3 w-full text-base appearance-none rounded-md border-transparent focus:outline-none bg-transparent" />
-                <label>Email address</label>
-                <fieldset>
-                    <legend><span>Email address</span></legend>
-                </fieldset>
-          </div>
+          <!-- <div class="floating relative">
+              <input id="email" type="email" name="email" placeholder=" " autocomplete="email" required="" class="block p-3 w-full text-base appearance-none rounded-md border-transparent focus:outline-none bg-transparent" />
+              <label>Email address</label>
+              <fieldset>
+                  <legend><span>Email address</span></legend>
+              </fieldset>
+          </div> -->
+          <FloatingInput label="Email address" type="email" name="email" placeholder=" " />
 
           <!-- https://notiz.dev/blog/floating-form-field-with-tailwindcss -->
           <div class="relative border-2 rounded-md focus-within:border-blue-500">
@@ -155,7 +156,11 @@
 </template> -->
 <script>
 import { useRouter } from "vue-router";
+import FloatingInput from "../components/FloatingInput.vue";
 export default {
+  components: {
+    FloatingInput,
+  },
   data() {
     return {
       credentials: {

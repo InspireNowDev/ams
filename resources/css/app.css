@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html {
+      font-family: Inter, system-ui, sans-serif;
+    }
+  }
+
 body {
     background-color: rgb(240 240 240);
 }
@@ -12,29 +18,3 @@ input:not(:placeholder-shown) ~ label.floating {
   @apply text-blue-500;
 }
 
-.floating label {
-    @apply absolute top-0 left-0 p-3 text-base text-gray-500 pointer-events-none max-w-full text-ellipsis whitespace-nowrap overflow-hidden ease-out duration-75;
-}
-.floating input:not(:placeholder-shown) ~  label {
-    @apply absolute -top-2 left-2.5 px-3 py-0 text-xs text-gray-500 ease-out duration-100;
-}
-.floating input:focus-within ~  label {
-    @apply absolute -top-2 left-2.5 px-3 py-0 text-xs text-blue-500 ease-out duration-100;
-}
-.floating fieldset {
-    @apply border-2 border-gray-300 rounded-md text-left px-3 absolute w-full pointer-events-none -top-1 bottom-0;
-}
-.floating input:not(:placeholder-shown) ~ fieldset {
-    @apply border-2 border-gray-300 text-left px-3 absolute w-full pointer-events-none -top-1 bottom-0;
-}
-.floating input:focus-within ~ fieldset {
-    @apply border-2 border-blue-500 text-left px-3 absolute w-full pointer-events-none -top-1 bottom-0;
-}
-
-.floating fieldset legend {
-    @apply float-none w-auto overflow-hidden block p-0 h-2.5 text-xs invisible whitespace-nowrap ease-out duration-75 max-w-0;
-}
-.floating input:focus-within ~ fieldset legend,
-.floating input:not(:placeholder-shown) ~ fieldset legend {
-    @apply float-none w-auto overflow-hidden block px-2 py-0 h-2.5 text-xs invisible whitespace-nowrap ease-out duration-100 max-w-full;
-}
