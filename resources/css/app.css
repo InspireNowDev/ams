@@ -12,9 +12,3 @@ body {
     background-color: rgb(240 240 240);
 }
 
-input:focus-within ~ label.floating,
-input:not(:placeholder-shown) ~ label.floating {
-  @apply transform scale-75 -translate-y-5 z-0 ml-2 px-2 py-1;
-  @apply text-blue-500;
-}
-

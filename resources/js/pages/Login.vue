@@ -7,7 +7,7 @@
       </div>
       <form class="mt-8 space-y-6" action="#" method="POST">
         <input type="hidden" name="remember" value="true" />
-        <div class="space-y-6 rounded-md">
+        <div class="space-y-6">
 
           <!-- https://mui.com/material-ui/react-text-field/ -->
           <!-- <div class="floating relative">
@@ -18,16 +18,7 @@
               </fieldset>
           </div> -->
           <FloatingInput label="Email address" type="email" name="email" placeholder=" " />
-
-          <!-- https://notiz.dev/blog/floating-form-field-with-tailwindcss -->
-          <div class="relative border-2 rounded-md focus-within:border-blue-500">
-              <input id="email" type="email" name="email" placeholder=" " autocomplete="email" required="" class="block px-3 py-2 w-full text-md appearance-none rounded-md border-gray-300 focus:outline-none bg-transparent" />
-              <label for="email" class="floating absolute top-0 rounded-xl text-md text-gray-500 bg-white px-3 py-2 duration-200 ease-in origin-0 pointer-events-none left-0">Email address</label>
-          </div>
-          <div class="relative border-2 rounded-md focus-within:border-blue-500">
-              <input id="password" type="password" name="password" placeholder=" " autocomplete="current-password" required="" class="block px-3 py-2 w-full text-md appearance-none rounded-md border-gray-300 focus:outline-none bg-transparent" />
-              <label for="password" class="floating absolute top-0 rounded-xl text-md text-gray-500 bg-white px-3 py-2 duration-200 ease-in origin-0 pointer-events-none left-0">Password</label>
-          </div>
+          <FloatingInput label="Password" type="password" name="password" placeholder=" " />
         </div>
 
         <div class="flex items-center justify-between">
