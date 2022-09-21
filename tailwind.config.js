@@ -4,7 +4,11 @@ module.exports = {
     "./resources/js/**/*.{js,ts,jsx,tsx,vue}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      transformOrigin: {
+        "0": "0%",
+      },
+    },
   },
   plugins: [],
 }
