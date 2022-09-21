@@ -1,4 +1,57 @@
 <template>
+  <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md space-y-8 p-9 bg-white rounded-xl">
+      <div>
+        <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in</h2>
+      </div>
+      <form class="mt-8 space-y-6" action="#" method="POST">
+        <input type="hidden" name="remember" value="true" />
+        <div class="space-y-6 rounded-md">
+
+          <!-- https://mui.com/material-ui/react-text-field/ -->
+          <div class="floating relative">
+                <input id="email" type="email" name="email" placeholder=" " autocomplete="email" required="" class="block p-3 w-full text-base appearance-none rounded-md border-transparent focus:outline-none bg-transparent" />
+                <label>Email address</label>
+                <fieldset>
+                    <legend><span>Email address</span></legend>
+                </fieldset>
+          </div>
+
+          <!-- https://notiz.dev/blog/floating-form-field-with-tailwindcss -->
+          <div class="relative border-2 rounded-md focus-within:border-blue-500">
+              <input id="email" type="email" name="email" placeholder=" " autocomplete="email" required="" class="block px-3 py-2 w-full text-md appearance-none rounded-md border-gray-300 focus:outline-none bg-transparent" />
+              <label for="email" class="floating absolute top-0 rounded-xl text-md text-gray-500 bg-white px-3 py-2 duration-200 ease-in origin-0 pointer-events-none left-0">Email address</label>
+          </div>
+          <div class="relative border-2 rounded-md focus-within:border-blue-500">
+              <input id="password" type="password" name="password" placeholder=" " autocomplete="current-password" required="" class="block px-3 py-2 w-full text-md appearance-none rounded-md border-gray-300 focus:outline-none bg-transparent" />
+              <label for="password" class="floating absolute top-0 rounded-xl text-md text-gray-500 bg-white px-3 py-2 duration-200 ease-in origin-0 pointer-events-none left-0">Password</label>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+          </div>
+
+          <div class="text-sm">
+            <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Sign in
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+
+<!-- <template>
   <div class="flex justify-center items-center mt-52">
     <div class="w-full max-w-xs">
       <form
@@ -99,7 +152,7 @@
       </form>
     </div>
   </div>
-</template>
+</template> -->
 <script>
 import { useRouter } from "vue-router";
 export default {
