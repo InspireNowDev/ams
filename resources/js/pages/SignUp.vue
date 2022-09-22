@@ -25,19 +25,21 @@
               focus:outline-none focus:shadow-outline
             "
             type="text"
-            placeholder="Firstname"
-            v-model="formData.firstname"
+            placeholder="Name"
+            v-model="formData.name"
             required
           />
         </div>
-        <div class="lastname-input mb-4">
+        <div class="password-input mb-6">
           <label
-            for="lastname"
+            for="identity"
             class="block text-gray-700 text-sm font-bold mb-2"
-            >Last name</label
+            >Password</label
           >
+
           <input
-            id="lastname"
+            aria-describedby="passwordHelp"
+            v-model="formData.password"
             class="
               shadow
               appearance-none
@@ -50,11 +52,44 @@
               leading-tight
               focus:outline-none focus:shadow-outline
             "
-            type="text"
-            placeholder="Last name"
-            v-model="formData.lastname"
+            id="password"
+            type="password"
+            placeholder="password 1"
             required
           />
+          <span class="text-xs text-red-700" v-if="this.password_message">{{
+            this.password_message
+          }}</span>
+        </div>
+        <div class="password-input mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2"
+            >Confirm Password</label
+          >
+
+          <input
+            class="
+              shadow
+              appearance-none
+              borderrounded
+              w-full
+              py-2
+              px-3
+              text-gray-700
+              mb-3
+              leading-tight
+              focus:outline-none focus:shadow-outline
+            "
+            id="password_confirm"
+            type="password"
+            placeholder="password 2"
+            v-model="formData.password_confirm"
+            required
+          />
+          <span
+            class="text-xs text-red-700"
+            v-if="this.password_confirm_message"
+            >{{ this.password_confirm_message }}</span
+          >
         </div>
 
         <div class="identity-input mb-4">
@@ -65,7 +100,6 @@
             Email</label
           >
           <input
-            id="identity"
             class="
               shadow
               appearance-none
@@ -81,10 +115,12 @@
             type="text"
             placeholder="Email"
             aria-describedby="emailHelp"
-            v-model="formData.EmailAddress"
+            v-model="formData.email"
             required
           />
-          <span class="text-xs text-red-700" id="emailHelp"></span>
+          <span class="text-xs text-red-700" v-if="this.emailMessage">{{
+            this.emailMessage
+          }}</span>
         </div>
         <div class="acceptterms-input mb-4">
           <input
@@ -113,6 +149,7 @@
           >
             Sign Up
           </button>
+          <span v-if="this.processing"> processing </span>
         </div>
       </form>
       <span
@@ -128,41 +165,102 @@ export default {
   data() {
     return {
       formData: {
-        firstname: "",
-        lastname: "",
-        EmailAddress: "",
+        name: "",
         password: "",
+        password_confirm: "",
+        email: "",
         agree: false,
       },
       usersData: [],
       myRouter: useRouter(),
       LVresponse: "",
+      emailMessage: "",
+      password_message: "",
+      password_confirm_message: "",
+      processing: false, //processing while waiting for response is here, can be done here whenever user commits an action that requires async methods
     };
+  },
+  //reactive data
+  computed: {
+    email() {
+      return this.formData.email;
+    },
+    password() {
+      return this.formData.password;
+    },
+    password_confirm() {
+      return this.formData.password_confirm;
+    },
+  },
+  watch: {
+    email(value) {
+      // binding this to the data value in the email input
+      value = this.email;
+      this.emailrefresh(value);
+    },
+    password(value) {
+      // binding this to the data value in the email input
+      value = this.password;
+      this.pwrefresh(value);
+    },
+    password_confirm(value) {
+      // binding this to the data value in the email input
+      value = this.password_confirm;
+      this.pwcfmrefresh(value);
+    },
   },
   methods: {
     async submitForm() {
-      console.log(this.firstname);
+      this.processing = true;
       let currentObj = this;
+      const postData = {
+        name: this.formData.name,
+        password: this.formData.password,
+        password_confirm: this.formData.password_confirm,
+        email: this.formData.email,
+      };
       await axios
-        .post("/api/profiles", {
-          firstname: this.formData.firstname,
-          lastname: this.formData.lastname,
-          // EmailAddress: this.formData.EmailAddress,
-          // password: this.formData.password,
+        .post("/api/register", postData)
+        .then((response) => {
+          console.log(response.data.status);
+          console.log(response.data.message);
+          alert("check your email");
+          //this.myRouter.push("set-password"); push to profilecreated  page
         })
-        .then(
-          (response) => {
-            console.log("success");
-          },
-          (error) => {
-            console.log("error");
+        // .catch(function (error) {
+        //   console.log("Show error notification!");
+        //   console.log(error.request);
+        // })
+        .catch((error) => {
+          //this.errors_exist = true;
+          if (error.response.status === 422) {
+            console.log(error);
+            //this.errors = error.response.data.errors || {};
+            this.emailMessage = error.response.data.errors.email[0];
+            this.password_message = error.response.data.errors.password[0];
+            this.password_confirm_message =
+              error.response.data.errors.password_confirm[0];
+          } else {
+            console.log("error undefined (from FE)");
           }
-        );
-
-      this.myRouter.push("set-password");
+          //tbc
+        })
+        .finally(() => {
+          this.processing = false;
+        });
     },
     redirectToLogin() {
       this.myRouter.push("login");
+    },
+    // watcher functions
+    emailrefresh() {
+      this.emailMessage = "";
+    },
+    pwrefresh() {
+      this.password_message = "";
+    },
+    pwcfmrefresh() {
+      this.password_confirm_message = "";
     },
   },
 };

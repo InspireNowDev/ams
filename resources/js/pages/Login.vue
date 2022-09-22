@@ -82,6 +82,7 @@
           >
             Sign In
           </button>
+          <span v-if="processing"> processing</span>
           <router-link
             class="
               inline-block
@@ -102,30 +103,59 @@
 </template>
 <script>
 import { useRouter } from "vue-router";
+import { mapActions } from "vuex";
+
 export default {
+  name: "login",
   data() {
     return {
       credentials: {
         username: "",
         password: "",
       },
-      userLogindata: [],
+      validationErrors: {},
+      processing: false,
       myRouter: useRouter(),
     };
   },
   methods: {
-    login() {
-      // temporary javascript checking for login credentials , because thiss happens in the backend usually
-      console.log(
-        "the login credentials are ",
-        this.credentials.username,
-        "and password : ",
-        this.credentials.password
-      );
-      
-      this.$store.state.userLoggedIn;
-      this.$store.state.userName = this.credentials.username;
-       this.myRouter.push("welcome");
+    ...mapActions({
+      signIn: "auth/login",
+    }),
+    async login() {
+      this.processing = true;
+      // the api here does not exist yet but the call would be like this
+      const loginData = {
+        email: this.credentials.username,
+        password: this.credentials.password,
+      };
+      //console.log(loginData);
+      await axios
+        .post("/api/login", loginData, {
+          headers: {
+            Accept: "application/json",
+            "content-type": "multipart/form-data",
+          },
+        })
+        // .then(function (response) {
+        //   if (response.status === 200) {
+        //     console.log(this.$store.state.userCredentials);
+        //     this.$store.state.userCredentials = response.data.user;
+        //     console.log(this.$store.state.userCredentials);
+        //     console.log(response.data.access_token);
+        //   }
+        //})
+        .then((response) => {
+          this.$store.state.userCredentials = response.data.user;
+          this.$store.state.login_token = response.data.access_token;
+          this.myRouter.push("welcome");
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.processing = false;
+        });
     },
   },
   created() {

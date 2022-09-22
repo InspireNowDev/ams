@@ -10,14 +10,15 @@
 </template>
 <script>
 //import { mapState } from "vuex";
+import Getter from "./components/GetterComponent.vue";
 import Topbar from "./components/TopBar.vue";
 import DashBar from "./components/DashboardTopbar.vue";
-import Getter from "./components/GetterComponent.vue";
+
 export default {
   components: {
+    Getter,
     Topbar,
     DashBar,
-    Getter,
   },
   data() {
     return {};

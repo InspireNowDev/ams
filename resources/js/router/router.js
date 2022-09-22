@@ -18,7 +18,7 @@ const routes = [
         component: () => import("@/pages/ForgotPassword.vue")
     },
     {
-        path: '/set-password',
+        path: '/set-password/:id/:token',
         name: 'set-password',
         component: () => import("@/pages/SetPassword.vue")
     },

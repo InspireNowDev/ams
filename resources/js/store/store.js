@@ -5,13 +5,13 @@ import { createStore } from 'vuex'
 const store = createStore({
     state() {
         return {
-            userName: '',
-            screenMode: 'dark-mode',//by default
-            count: 0,
-            profiles: {
-                profile: []
-            },
             userLoggedIn: false,
+            userCredentials: {
+                id: 0,
+                email: "",
+                name: "",
+            },
+            login_token: "",
         }
     },
     mutations: {

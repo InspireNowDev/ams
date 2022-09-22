@@ -1,5 +1,9 @@
+// this page still in the works , might break in  abit
+
 <template>
   <div class="flex justify-center items-center mt-52">
+    <!-- <h1>{{ $route.params.id }}</h1>
+    <h1>{{ $route.params.token }}</h1> -->
     <div class="w-full max-w-xs">
       <form
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -91,8 +95,12 @@
 export default {
   data() {
     return {
+      // userID: 0,
+      // userEmail: "",
+      // userName: "",
       passwordInit: "",
       passwordCfm: "",
+      password: "",
       msg: [],
       disabled: [true, true],
     };
@@ -110,9 +118,21 @@ export default {
   },
   methods: {
     setPass() {
+      const password = {
+        headers: {
+          Authorization: `Bearer ${this.$route.params.token}`,
+        },
+        body: {
+          password: this.passwordCfm,
+        },
+      };
       //check if the passwords match before encrypting and sending it to the backend
       if (this.passwordInit === this.passwordCfm) {
         console.log("passwords match");
+        axios
+          .put(`/api/set-password/${this.$route.params.id}`, password)
+          .then((response) => console.log(response.data))
+          .catch((error) => console.log(error.response));
       } else {
         console.log("passwords do not match");
       }
@@ -125,7 +145,6 @@ export default {
       } else {
         this.msg["password1"] = "";
       }
-      console.log(this.msg);
     },
     validatePw2(value) {
       let difference = 8 - value.length;
@@ -135,7 +154,6 @@ export default {
       } else {
         this.msg["password2"] = "";
       }
-      console.log(this.msg);
     },
   },
 };
