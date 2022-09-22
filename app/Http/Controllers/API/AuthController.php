@@ -8,16 +8,19 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SetPassword;
+use Illuminate\Support\Facades\DB;
  
 class AuthController extends Controller
 {
     public function register(Request $request){
         $requestData = $request->all();
+        $requestData['name'] = $requestData['firstname'].' '.$requestData['lastname'];
         $validator = Validator::make($requestData,[
-            'name' => 'required|max:70',
+            'firstname' => 'required|max:70',
+            'lastname' => 'required|max:70',
             'email' => 'email|required|unique:users,email',
-            'password' => 'required|min:8',
-            'password_confirm' => 'required|same:password',
         ]);
 
         if ($validator->fails()) {
@@ -26,11 +29,26 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $requestData['password'] = Hash::make($requestData['password']);
-
         $user = User::create($requestData);
+        $token = md5(uniqid($user['id'], true)) ;
 
-        return response([ 'status' => true, 'message' => 'User successfully register.' ], 200);
+        $email = $requestData['email'];
+        $data = ([
+            'name' => $requestData['name'],
+            'email' => $requestData['email'],
+            'token' => $token,
+            'link'=> url('').'/set-password/'.  $user['id'] .'/'. $token,
+        ]);
+
+        DB::table('set_password')->insert([
+            'email' => $data['email'], 
+            'token' => $data['token'],
+            'created_at' => NOW(),
+        ]);
+
+        Mail::to($email)->send(new SetPassword($data));
+
+        return response([ 'status' => true, 'message' => 'User successfully register.'], 200);
     }
   
     public function login(Request $request){
@@ -76,11 +94,54 @@ class AuthController extends Controller
         }
     }
 
-    public function logout (Request $request)
-    {
+    public function logout (Request $request){
         $token = $request->user()->token();
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);
+    }
+
+    public function set_password(Request $request, $id, $token){
+        $requestData = $request->all();
+        $validator = Validator::make($requestData,[
+            'password' => 'required|min:8',
+            'password_confirm' => 'required|same:password',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $requestData['password'] = Hash::make($requestData['password']);
+
+        $user = User::find($id);
+        $user->password = $requestData['password'];
+        $user->update();
+
+        DB::table('set_password')->insert([
+            'email' => $data['email'], 
+            'token' => $data['token'],
+            'created_at' => NOW(),
+        ]);
+
+        DB::table('set_password')
+              ->where('token', $token)
+              ->update(['status' => 0]
+        );
+
+        return response([ 'status' => true, 'message' => 'User successfully register.'], 200);
+
+    }
+
+    public function set_password_status(Request $request){
+        $token = $request->route('token');
+        $status = DB::table('set_password')->where([['token', '=', $token],['status', '=', '0']])->get();
+        if(!$status){
+            return response()->json([
+                'errors' => 'Token Expired'
+            ], 422);
+        }
     }
 }

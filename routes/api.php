@@ -22,8 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-// Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
-//Route::put('set-password', [AuthController::class, 'setPassword']);
+Route::post('/set-password/{id}/{token}', [AuthController::class, 'set_password']);
+Route::post('/set-password-status/{id}/{token}', [AuthController::class, 'set_password_status']);
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
