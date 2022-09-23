@@ -127,26 +127,14 @@ export default {
     async login() {
       this.processing = true;
       // the api here does not exist yet but the call would be like this
-      const loginData = {
-        email: this.credentials.username,
-        password: this.credentials.password,
-      };
       //console.log(loginData);
       await axios
-        .post("/api/login", loginData, {
+        .post("/api/login", this.credentials, {
           headers: {
             Accept: "application/json",
             "content-type": "multipart/form-data",
           },
         })
-        // .then(function (response) {
-        //   if (response.status === 200) {
-        //     console.log(this.$store.state.userCredentials);
-        //     this.$store.state.userCredentials = response.data.user;
-        //     console.log(this.$store.state.userCredentials);
-        //     console.log(response.data.access_token);
-        //   }
-        //})
         .then((response) => {
           this.$store.state.userCredentials = response.data.user;
           this.$store.state.login_token = response.data.access_token;

@@ -125,11 +125,11 @@ export default {
     password(value) {
       // binding this to the data value in the email input
       value = this.password;
-      this.validatePw1(value);
+      this.validatePw(value, "password1");
     },
     password_confirm(value) {
       value = this.password_confirm;
-      this.validatePw2(value);
+      this.validatePw(value, "password2");
     },
   },
   methods: {
@@ -152,30 +152,19 @@ export default {
           })
           .catch((error) => console.log(error.response));
       } else {
-        this.passwordMsg = "Passwords not long enough";
+        this.passwordMsg = "passwords dont match";
         console.log("passwords do not match");
       }
     },
-    validatePw1(value) {
+    validatePw(value, val) {
       if (value.length == 0) {
-        this.msg["password1"] = "";
+        this.msg[val] = "";
       } else if (value.length < 4) {
-        this.msg["password1"] = "weak";
+        this.msg[val] = "weak";
       } else if (value.length < 6) {
-        this.msg["password1"] = "okay";
+        this.msg[val] = "okay";
       } else if (value.length < 8) {
-        this.msg["password1"] = "strong";
-      }
-    },
-    validatePw2(value) {
-      if (value.length == 0) {
-        this.msg["password2"] = "";
-      } else if (value.length < 4) {
-        this.msg["password2"] = "weak";
-      } else if (value.length < 6) {
-        this.msg["password2"] = "okay";
-      } else if (value.length < 8) {
-        this.msg["password2"] = "strong";
+        this.msg[val] = "strong";
       }
     },
   },
