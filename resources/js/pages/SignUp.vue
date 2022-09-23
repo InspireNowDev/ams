@@ -1,6 +1,7 @@
 <template>
   <div class="flex justify-center items-center mt-52">
     <div class="w-full max-w-xs">
+      <div class="successMsg" v-if="this.LVresponse">{{ this.LVresponse }}</div>
       <form
         v-on:submit.prevent="submitForm()"
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -26,46 +27,16 @@
             "
             type="text"
             placeholder="Name"
-            v-model="formData.name"
+            v-model="formData.firstname"
             required
           />
         </div>
-        <div class="password-input mb-6">
+        <div class="firstname-input mb-4">
           <label
-            for="identity"
+            for="firstname"
             class="block text-gray-700 text-sm font-bold mb-2"
-            >Password</label
+            >Last Name</label
           >
-
-          <input
-            aria-describedby="passwordHelp"
-            v-model="formData.password"
-            class="
-              shadow
-              appearance-none
-              borderrounded
-              w-full
-              py-2
-              px-3
-              text-gray-700
-              mb-3
-              leading-tight
-              focus:outline-none focus:shadow-outline
-            "
-            id="password"
-            type="password"
-            placeholder="password 1"
-            required
-          />
-          <span class="text-xs text-red-700" v-if="this.password_message">{{
-            this.password_message
-          }}</span>
-        </div>
-        <div class="password-input mb-6">
-          <label class="block text-gray-700 text-sm font-bold mb-2"
-            >Confirm Password</label
-          >
-
           <input
             class="
               shadow
@@ -79,24 +50,15 @@
               leading-tight
               focus:outline-none focus:shadow-outline
             "
-            id="password_confirm"
-            type="password"
-            placeholder="password 2"
-            v-model="formData.password_confirm"
+            type="text"
+            placeholder="Name"
+            v-model="formData.lastname"
             required
           />
-          <span
-            class="text-xs text-red-700"
-            v-if="this.password_confirm_message"
-            >{{ this.password_confirm_message }}</span
-          >
         </div>
 
-        <div class="identity-input mb-4">
-          <label
-            for="identity"
-            class="block text-gray-700 text-sm font-bold mb-2"
-          >
+        <div class="email-input mb-4">
+          <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
             Email</label
           >
           <input
@@ -165,18 +127,16 @@ export default {
   data() {
     return {
       formData: {
-        name: "",
-        password: "",
-        password_confirm: "",
+        firstname: "",
+        lastname: "",
         email: "",
-        agree: false,
+        useragree: false,
       },
-      usersData: [],
       myRouter: useRouter(),
+
       LVresponse: "",
       emailMessage: "",
-      password_message: "",
-      password_confirm_message: "",
+
       processing: false, //processing while waiting for response is here, can be done here whenever user commits an action that requires async methods
     };
   },
@@ -185,12 +145,6 @@ export default {
     email() {
       return this.formData.email;
     },
-    password() {
-      return this.formData.password;
-    },
-    password_confirm() {
-      return this.formData.password_confirm;
-    },
   },
   watch: {
     email(value) {
@@ -198,33 +152,23 @@ export default {
       value = this.email;
       this.emailrefresh(value);
     },
-    password(value) {
-      // binding this to the data value in the email input
-      value = this.password;
-      this.pwrefresh(value);
-    },
-    password_confirm(value) {
-      // binding this to the data value in the email input
-      value = this.password_confirm;
-      this.pwcfmrefresh(value);
-    },
   },
   methods: {
     async submitForm() {
       this.processing = true;
       let currentObj = this;
       const postData = {
-        name: this.formData.name,
-        password: this.formData.password,
-        password_confirm: this.formData.password_confirm,
+        firstname: this.formData.firstname,
+        lastname: this.formData.lastname,
         email: this.formData.email,
+        useragree: this.formData.useragree,
       };
       await axios
         .post("/api/register", postData)
         .then((response) => {
           console.log(response.data.status);
           console.log(response.data.message);
-          alert("check your email");
+          this.LVresponse = "check your email to confirm register";
           //this.myRouter.push("set-password"); push to profilecreated  page
         })
         // .catch(function (error) {
@@ -232,14 +176,11 @@ export default {
         //   console.log(error.request);
         // })
         .catch((error) => {
-          //this.errors_exist = true;
+          this.errors_exist = true;
           if (error.response.status === 422) {
             console.log(error);
             //this.errors = error.response.data.errors || {};
             this.emailMessage = error.response.data.errors.email[0];
-            this.password_message = error.response.data.errors.password[0];
-            this.password_confirm_message =
-              error.response.data.errors.password_confirm[0];
           } else {
             console.log("error undefined (from FE)");
           }
@@ -256,12 +197,14 @@ export default {
     emailrefresh() {
       this.emailMessage = "";
     },
-    pwrefresh() {
-      this.password_message = "";
-    },
-    pwcfmrefresh() {
-      this.password_confirm_message = "";
-    },
   },
 };
 </script>
+<style scoped>
+.successMsg {
+  background-color: aqua;
+  border-radius: 6px;
+  padding: 10px;
+  margin: 10px;
+}
+</style>

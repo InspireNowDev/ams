@@ -27,12 +27,6 @@ const routes = [
         name: 'welcome',
         component: () => import("@/pages/Welcome.vue")
     },
-    {
-        path: '/CRUD',
-        name: 'about',
-        component: () => import("@/pages/CRUD.vue")
-        // routing can also be done this way 
-    },
     //reroutes to page not found page when the link does not exist 
     {
         path: '/:pathMatch(.*)*',

@@ -34,7 +34,7 @@
             id="passInit"
             type="password"
             placeholder="*******"
-            v-model="passwordInit"
+            v-model="password"
             required
           />
           <span v-if="msg.password1">{{ msg.password1 }}</span>
@@ -60,7 +60,7 @@
               focus:outline-none focus:shadow-outline
             "
             id="passwordCfm"
-            v-model="passwordCfm"
+            v-model="password_confirm"
             type="password"
             placeholder="*******"
             required
@@ -98,8 +98,8 @@ export default {
       // userID: 0,
       // userEmail: "",
       // userName: "",
-      passwordInit: "",
-      passwordCfm: "",
+      password: "",
+      password_confirm: "",
       password: "",
       msg: [],
       disabled: [true, true],
@@ -119,18 +119,17 @@ export default {
   methods: {
     setPass() {
       const password = {
-        headers: {
-          Authorization: `Bearer ${this.$route.params.token}`,
-        },
-        body: {
-          password: this.passwordCfm,
-        },
+        password: this.password,
+        password_confirm: this.password,
       };
       //check if the passwords match before encrypting and sending it to the backend
       if (this.passwordInit === this.passwordCfm) {
         console.log("passwords match");
         axios
-          .put(`/api/set-password/${this.$route.params.id}`, password)
+          .post(
+            `/api/set-password/${this.$route.params.id}/${this.$route.params.token}`,
+            password
+          )
           .then((response) => console.log(response.data))
           .catch((error) => console.log(error.response));
       } else {
