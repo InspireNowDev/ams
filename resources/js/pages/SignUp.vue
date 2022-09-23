@@ -3,6 +3,7 @@
     <div class="w-full max-w-xs">
       <div class="successMsg" v-if="this.LVresponse">{{ this.LVresponse }}</div>
       <form
+        v-else
         v-on:submit.prevent="submitForm()"
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
@@ -113,11 +114,11 @@
           </button>
           <span v-if="this.processing"> processing </span>
         </div>
+        <span
+          >Already have an account??
+          <router-link :to="{ name: 'login' }">Log in</router-link>
+        </span>
       </form>
-      <span
-        >Already have an account??
-        <router-link :to="{ name: 'login' }">Log in</router-link>
-      </span>
     </div>
   </div>
 </template>

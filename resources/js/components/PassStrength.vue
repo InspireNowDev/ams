@@ -3,7 +3,7 @@
   <span v-else-if="strength == 'okay'" class="okay">{{
     "(" + strength + ")"
   }}</span>
-  <span v-else-if="strength == 'strong '" class="strong">{{
+  <span v-else-if="strength == 'strong'" class="strong">{{
     "(" + strength + ")"
   }}</span>
   <span v-else class="none"></span>

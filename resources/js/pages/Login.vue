@@ -1,6 +1,7 @@
 <template>
   <div class="flex justify-center items-center mt-52">
     <div class="w-full max-w-xs">
+      <div v-if="this.message" class="wrongPass">{{ this.message }}</div>
       <form
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         v-on:submit.prevent="login()"
@@ -113,6 +114,7 @@ export default {
         username: "",
         password: "",
       },
+      message: "",
       validationErrors: {},
       processing: false,
       myRouter: useRouter(),
@@ -152,6 +154,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.message = "wrong password or username";
         })
         .finally(() => {
           this.processing = false;
@@ -163,3 +166,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.wrongPass {
+  border-radius: 6px;
+  padding: 10px;
+  margin: 10px;
+  background-color: rgb(226, 141, 72);
+}
+</style>

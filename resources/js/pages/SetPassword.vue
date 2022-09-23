@@ -15,7 +15,7 @@
         >
         <div class="passwordInit-input mb-4">
           <label
-            for="passwordCfm"
+            for="password_confirm"
             class="block text-gray-700 text-sm font-bold mb-2"
             >Enter Password</label
           >
@@ -41,9 +41,9 @@
           <PassStrength :message="msg.password1" :key="msg.password1" />
           <!-- <span v-if="msg.password1">{{ msg.password1 }}</span> -->
         </div>
-        <div class="passwordCfm-input mb-6">
+        <div class="password_confirm-input mb-6">
           <label
-            for="passwordCfm"
+            for="password_confirm"
             class="block text-gray-700 text-sm font-bold mb-2"
             >Re-enter Password</label
           >
@@ -61,7 +61,7 @@
               leading-tight
               focus:outline-none focus:shadow-outline
             "
-            id="passwordCfm"
+            id="password_confirm"
             v-model="password_confirm"
             type="password"
             placeholder="*******"
@@ -102,6 +102,8 @@
 
 <script>
 import PassStrength from "../components/PassStrength.vue";
+import { useRouter } from "vue-router";
+
 export default {
   components: {
     PassStrength,
@@ -116,6 +118,7 @@ export default {
       passwordMsg: "",
       msg: [],
       disabled: [true, true],
+      myRouter: useRouter(),
     };
   },
   watch: {
@@ -136,8 +139,7 @@ export default {
         password_confirm: this.password_confirm,
       };
       //check if the passwords match before encrypting and sending it to the backend
-      if (this.passwordInit === this.passwordCfm) {
-        console.log("passwords match");
+      if (this.password === this.password_confirm) {
         axios
           .post(
             `/api/set-password/${this.$route.params.id}/${this.$route.params.token}`,
@@ -146,9 +148,11 @@ export default {
           .then((response) => {
             console.log(response.data.message);
             this.passwordMsg = "password set succesfully";
+            this.myRouter.push({ name: "login" });
           })
           .catch((error) => console.log(error.response));
       } else {
+        this.passwordMsg = "Passwords not long enough";
         console.log("passwords do not match");
       }
     },
@@ -159,7 +163,7 @@ export default {
         this.msg["password1"] = "weak";
       } else if (value.length < 6) {
         this.msg["password1"] = "okay";
-      } else {
+      } else if (value.length < 8) {
         this.msg["password1"] = "strong";
       }
     },
@@ -170,7 +174,7 @@ export default {
         this.msg["password2"] = "weak";
       } else if (value.length < 6) {
         this.msg["password2"] = "okay";
-      } else {
+      } else if (value.length < 8) {
         this.msg["password2"] = "strong";
       }
     },
