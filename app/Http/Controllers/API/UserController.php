@@ -48,6 +48,7 @@ class UserController extends Controller
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'email' => $request->email,
+            'useragree' => $request->useragree,
         ]);
 
         return response()->json([

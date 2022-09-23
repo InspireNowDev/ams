@@ -21,6 +21,7 @@ class AuthController extends Controller
             'firstname' => 'required|max:70',
             'lastname' => 'required|max:70',
             'email' => 'email|required|unique:users,email',
+            'useragree' => 'boolean',
         ]);
 
         if ($validator->fails()) {
@@ -120,18 +121,12 @@ class AuthController extends Controller
         $user->password = $requestData['password'];
         $user->update();
 
-        DB::table('set_password')->insert([
-            'email' => $data['email'], 
-            'token' => $data['token'],
-            'created_at' => NOW(),
-        ]);
-
         DB::table('set_password')
               ->where('token', $token)
               ->update(['status' => 0]
         );
 
-        return response([ 'status' => true, 'message' => 'User successfully register.'], 200);
+        return response([ 'status' => true, 'message' => 'Password set successful.'], 200);
 
     }
 
