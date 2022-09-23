@@ -88,7 +88,7 @@
           <input
             type="checkbox"
             id="checkbox"
-            v-model="formData.agree"
+            v-model="formData.useragree"
             required
           />
           <label for="checkbox" class="text-gray-700 text-sm font-bold mb-2">

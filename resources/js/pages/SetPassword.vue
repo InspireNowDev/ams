@@ -5,6 +5,7 @@
     <!-- <h1>{{ $route.params.id }}</h1>
     <h1>{{ $route.params.token }}</h1> -->
     <div class="w-full max-w-xs">
+      <div v-if="this.passwordMsg">{{ this.passwordMsg }}</div>
       <form
         class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         v-on:submit.prevent="setPass()"
@@ -37,7 +38,8 @@
             v-model="password"
             required
           />
-          <span v-if="msg.password1">{{ msg.password1 }}</span>
+          <PassStrength :message="msg.password1" :key="msg.password1" />
+          <!-- <span v-if="msg.password1">{{ msg.password1 }}</span> -->
         </div>
         <div class="passwordCfm-input mb-6">
           <label
@@ -65,8 +67,15 @@
             placeholder="*******"
             required
           />
-
-          <span v-if="msg.password2">{{ msg.password2 }}</span>
+          <PassStrength :message="msg.password2" :key="msg.password2" />
+          <!-- <span v-if="msg.password2 == 'weak'" class="weak">{{
+            msg.password2
+          }}</span>
+          <span v-else-if="msg.password2 == 'okay'" class="okay">{{
+            msg.password2
+          }}</span>
+          <span v-else class="strong">{{ msg.password2 }}</span> -->
+          <!-- //can be in a component -->
         </div>
 
         <div class="flex items-center justify-end">
@@ -92,7 +101,11 @@
 </template>
 
 <script>
+import PassStrength from "../components/PassStrength.vue";
 export default {
+  components: {
+    PassStrength,
+  },
   data() {
     return {
       // userID: 0,
@@ -100,19 +113,19 @@ export default {
       // userName: "",
       password: "",
       password_confirm: "",
-      password: "",
+      passwordMsg: "",
       msg: [],
       disabled: [true, true],
     };
   },
   watch: {
-    passwordInit(value) {
+    password(value) {
       // binding this to the data value in the email input
-      value = this.passwordInit;
+      value = this.password;
       this.validatePw1(value);
     },
-    passwordCfm(value) {
-      value = this.passwordCfm;
+    password_confirm(value) {
+      value = this.password_confirm;
       this.validatePw2(value);
     },
   },
@@ -120,7 +133,7 @@ export default {
     setPass() {
       const password = {
         password: this.password,
-        password_confirm: this.password,
+        password_confirm: this.password_confirm,
       };
       //check if the passwords match before encrypting and sending it to the backend
       if (this.passwordInit === this.passwordCfm) {
@@ -130,30 +143,48 @@ export default {
             `/api/set-password/${this.$route.params.id}/${this.$route.params.token}`,
             password
           )
-          .then((response) => console.log(response.data))
+          .then((response) => {
+            console.log(response.data.message);
+            this.passwordMsg = "password set succesfully";
+          })
           .catch((error) => console.log(error.response));
       } else {
         console.log("passwords do not match");
       }
     },
     validatePw1(value) {
-      let difference = 8 - value.length;
-      if (value.length < 8) {
-        this.msg["password1"] =
-          "Must be 8 characters! " + difference + " characters left";
-      } else {
+      if (value.length == 0) {
         this.msg["password1"] = "";
+      } else if (value.length < 4) {
+        this.msg["password1"] = "weak";
+      } else if (value.length < 6) {
+        this.msg["password1"] = "okay";
+      } else {
+        this.msg["password1"] = "strong";
       }
     },
     validatePw2(value) {
-      let difference = 8 - value.length;
-      if (value.length < 8) {
-        this.msg["password2"] =
-          "Must be 8 characters! " + difference + " characters left";
-      } else {
+      if (value.length == 0) {
         this.msg["password2"] = "";
+      } else if (value.length < 4) {
+        this.msg["password2"] = "weak";
+      } else if (value.length < 6) {
+        this.msg["password2"] = "okay";
+      } else {
+        this.msg["password2"] = "strong";
       }
     },
   },
 };
 </script>
+<style scoped>
+.weak {
+  border-bottom: 3px solid red;
+}
+.okay {
+  border-bottom: 3px solid rgb(255, 140, 0);
+}
+.strong {
+  border-bottom: 3px solid green;
+}
+</style>
