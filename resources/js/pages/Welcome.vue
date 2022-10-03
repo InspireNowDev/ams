@@ -1,5 +1,7 @@
 <template>
-  <h1>Welcome {{ userLogin }}</h1>
+  <h1>Welcome user {{ userName }}</h1>
+  <h2>email : {{ userEmail }}</h2>
+  <h2>Role : {{ userRole }}</h2>
 </template>
 <script>
 export default {
@@ -7,8 +9,14 @@ export default {
     return {};
   },
   computed: {
-    userLogin() {
-      return this.$store.state.userName;
+    userName() {
+      return this.$store.getters.userName;
+    },
+    userEmail() {
+      return this.$store.getters.userEmail;
+    },
+    userRole() {
+      return this.$store.getters.userRole;
     },
   },
 };

@@ -134,14 +134,9 @@ export default {
           },
         })
         .then((response) => {
-          this.$store.commit(
-            "login",
-            response.data.user,
-            response.data.access_token
-          );
-          //this.$store.state.userCredentials = response.data.user;
-          //this.$store.state.login_token = response.data.access_token;
-          //here roles will be returned from server and assigned to the vuex data store
+          this.$store.commit("login", response.data.user);
+          this.$store.commit("token_set", response.data.access_token);
+          console.log(response.data.access_token);
           this.myRouter.push("welcome");
         })
         .catch((error) => {
@@ -152,9 +147,6 @@ export default {
           this.processing = false;
         });
     },
-  },
-  created() {
-    this.userLogindata = this.$store.state.users;
   },
 };
 </script>

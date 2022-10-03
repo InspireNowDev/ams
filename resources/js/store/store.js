@@ -10,22 +10,23 @@ const store = createStore({
             userCredentials: {
                 id: 0,
                 email: "",
-                name: "",
+                userName: "",
             },
             login_token: "",
-            userRole: "admin",
+            userRole: "Super-admin",
         }
     },
     mutations: {
-        login(state, userCredentials, loginToken) {
+        login(state, userCredentials) {
             state.userCredentials = userCredentials;
-            state.login_token = loginToken;
             state.userLoggedIn = true;
         },
         logout(state) {
             state.userLoggedIn = false;
-            state.login_token = '';
             state.userCredentials = null;
+        },
+        token_set(state, login_token) {
+            state.login_token = login_token;
         }
     },
     getters: {
@@ -36,7 +37,7 @@ const store = createStore({
             return state.userCredentials.email;
         },
         userName(state) {
-            return state.userCredentials.name;
+            return state.userCredentials.userName;
         },
         userRole(state) {
             return state.userRole;
