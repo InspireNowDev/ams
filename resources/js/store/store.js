@@ -1,8 +1,9 @@
 import { createStore } from 'vuex'
-
+import createPersistedState from "vuex-persistedstate";
 
 // Create a new store instance.
 const store = createStore({
+
     state() {
         return {
             userLoggedIn: false,//default false
@@ -10,15 +11,21 @@ const store = createStore({
                 id: 0,
                 email: "",
                 name: "",
-
             },
             login_token: "",
-            userRole: "Super-admin",
+            userRole: "admin",
         }
     },
     mutations: {
-        increment(state) {
-
+        login(state, userCredentials, loginToken) {
+            state.userCredentials = userCredentials;
+            state.login_token = loginToken;
+            state.userLoggedIn = true;
+        },
+        logout(state) {
+            state.userLoggedIn = false;
+            state.login_token = '';
+            state.userCredentials = null;
         }
     },
     getters: {
@@ -32,7 +39,7 @@ const store = createStore({
             return state.userCredentials.name;
         },
         userRole(state) {
-            return state.userCredentials.userRole;
+            return state.userRole;
         },
         logToken(state) {
             return state.login_token;
@@ -45,8 +52,8 @@ const store = createStore({
         setID(state) {
 
         }
-    }
-
+    },
+    plugins: [createPersistedState()]
 })
 
 export default store;

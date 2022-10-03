@@ -102,7 +102,7 @@ export default {
   data() {
     return {
       showMenu: false,
-      navElements: ["users","login"],
+      navElements: ["users"],
       activeTab: "welcome",
       myRouter: useRouter(),
     };
@@ -113,9 +113,9 @@ export default {
       this.showMenu = !this.showMenu;
     },
     logOut() {
-      alert("you are about to be logged out");
-      this.$store.state.userLoggedIn = false;
-      this.$store.state.userName = "";
+      this.$store.commit("logout");
+      //this.$store.state.userLoggedIn = false;
+      //this.$store.state.userName = "";
       this.myRouter.push("login");
     },
   },

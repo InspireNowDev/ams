@@ -134,9 +134,13 @@ export default {
           },
         })
         .then((response) => {
-          this.$store.state.userCredentials = response.data.user;
-          this.$store.state.login_token = response.data.access_token;
-          this.$store.state.userLoggedIn = true;
+          this.$store.commit(
+            "login",
+            response.data.user,
+            response.data.access_token
+          );
+          //this.$store.state.userCredentials = response.data.user;
+          //this.$store.state.login_token = response.data.access_token;
           //here roles will be returned from server and assigned to the vuex data store
           this.myRouter.push("welcome");
         })
