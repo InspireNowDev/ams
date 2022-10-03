@@ -30,7 +30,7 @@
             type="text"
             placeholder="Email"
             aria-describedby="emailHelp"
-            v-model="credentials.username"
+            v-model="credentials.email"
             required
           />
           <span class="text-xs text-red-700" id="emailHelp"></span>
@@ -111,7 +111,7 @@ export default {
   data() {
     return {
       credentials: {
-        username: "",
+        email: "",
         password: "",
       },
       message: "",
@@ -126,8 +126,6 @@ export default {
     }),
     async login() {
       this.processing = true;
-      // the api here does not exist yet but the call would be like this
-      //console.log(loginData);
       await axios
         .post("/api/login", this.credentials, {
           headers: {
@@ -138,6 +136,8 @@ export default {
         .then((response) => {
           this.$store.state.userCredentials = response.data.user;
           this.$store.state.login_token = response.data.access_token;
+          this.$store.state.userLoggedIn = true;
+          //here roles will be returned from server and assigned to the vuex data store
           this.myRouter.push("welcome");
         })
         .catch((error) => {

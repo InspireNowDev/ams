@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import PassStrength from "../components/PassStrength.vue";
+import PassStrength from "../../components/PassStrength.vue";
 import { useRouter } from "vue-router";
 
 export default {

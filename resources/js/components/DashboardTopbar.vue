@@ -102,8 +102,8 @@ export default {
   data() {
     return {
       showMenu: false,
-      navElements: ["CRUD"],
-      activeTab: "dashboard",
+      navElements: ["users","login"],
+      activeTab: "welcome",
       myRouter: useRouter(),
     };
   },
