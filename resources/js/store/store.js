@@ -10,10 +10,10 @@ const store = createStore({
             userCredentials: {
                 id: 0,
                 email: "",
-                userName: "",
+                name: "",
             },
             login_token: "",
-            userRole: "Super-admin",
+            userRole: "admin",
         }
     },
     mutations: {
@@ -37,7 +37,7 @@ const store = createStore({
             return state.userCredentials.email;
         },
         userName(state) {
-            return state.userCredentials.userName;
+            return state.userCredentials.name;
         },
         userRole(state) {
             return state.userRole;

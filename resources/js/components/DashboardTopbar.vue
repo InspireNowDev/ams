@@ -40,7 +40,8 @@
           "
           href="#pablo"
         >
-          If youre reading this youre logged in
+          <!-- admin or user messsage -->
+          <h1>{{ role }}</h1>
         </a>
         <button
           class="
@@ -117,6 +118,11 @@ export default {
       //this.$store.state.userLoggedIn = false;
       //this.$store.state.userName = "";
       this.myRouter.push("login");
+    },
+  },
+  computed: {
+    role() {
+      return this.$store.getters.userRole;
     },
   },
 };
