@@ -40,4 +40,14 @@ export default {
   width: 100%;
 }
 </style>
+<style>
+.disabled {
+  background-color: rgb(197, 197, 197);
+  color: white;
+}
+.disabled:hover {
+  background-color: rgb(197, 197, 197);
+  color: white;
+}
+</style>
 

@@ -65,7 +65,7 @@ function checkCredentials(to, from, next) {
     else next();//check user role path
 }
 function checkRole(to, from, next) {    //if (store.state.userCredentials.userRole == "Super-admin") { console.log(store.state.userCredentials.userRole); next(); }  // they are  
-    if (store.state.userLoggedIn && store.state.userRole === "Super-admin") next()
+    if (store.state.userLoggedIn && store.state.userRole === "admin") next()
     else next({ name: 'unauthorized' }); // we are authorized, continue on to the requested route
 }
 

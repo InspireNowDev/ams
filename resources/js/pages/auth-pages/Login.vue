@@ -105,7 +105,7 @@
 <template>
   <div
     class="
-      flex
+      flex flex-col
       min-h-full
       items-center
       justify-center
@@ -146,6 +146,7 @@
               </fieldset>
           </div> -->
           <FloatingInput
+            id="emailAdress"
             label="Email address"
             type="email"
             name="email"
@@ -153,6 +154,7 @@
             @custom-change="handleEmail"
           />
           <FloatingInput
+            id="password"
             label="Password"
             type="password"
             name="password"
@@ -213,12 +215,18 @@
               focus:ring-indigo-500
               focus:ring-offset-2
             "
+            :class="!isComplete ? 'disabled' : 'enabled'"
+            :disabled="!isComplete"
           >
-            Sign in
+            <span v-if="this.processing">Processing..</span>
+            <span v-else> Sign in</span>
           </button>
         </div>
       </form>
     </div>
+    <Toasts />
+    <!-- <Toast v-if="this.message" message="wtv however" toast-type="normal" /> example toast -->
+    <!-- toasts can be used like a component and passed message and type of toast to be shown -->
   </div>
 </template>
 
@@ -226,10 +234,13 @@
 import { useRouter } from "vue-router";
 import { mapActions } from "vuex";
 import FloatingInput from "@/components/FloatingInput.vue";
+//import Toast from "@/components/toastMessages.vue";
+import Toasts from "@/components/ToastContainer.vue";
 
 export default {
   components: {
     FloatingInput,
+    Toasts,
   },
   name: "login",
   data() {
@@ -260,11 +271,16 @@ export default {
         .then((response) => {
           this.$store.commit("login", response.data.user);
           this.$store.commit("token_set", response.data.access_token);
-          console.log(response.data.access_token);
+          this.$store.commit("role_set", "admin"); //hardset here but will be pulled from BE later
           this.myRouter.push("welcome");
         })
         .catch((error) => {
-          console.log(error);
+          this.$store.commit("addToast", {
+            title: "Hello Vuex!",
+            type: "danger",
+            message: "your password or username is incorrect",
+          });
+          //here can use the toast notification pane
           this.message = "wrong password or username";
         })
         .finally(() => {
@@ -278,6 +294,14 @@ export default {
       this.credentials.password = s;
     },
   },
+  computed: {
+    toasts() {
+      return this.$store.state.toasts;
+    },
+    isComplete() {
+      return this.credentials.email != "" && this.credentials.password != "";
+    },
+  },
 };
 </script>
 <style scoped>
@@ -285,6 +309,7 @@ export default {
   border-radius: 6px;
   padding: 10px;
   margin: 10px;
-  background-color: rgb(226, 141, 72);
+  background-color: rgb(254, 75, 44);
+  color: white;
 }
 </style>

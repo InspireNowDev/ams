@@ -5,7 +5,10 @@ import router from './router/router.js'
 import store from './store/store.js'
 import axios, { Axios } from 'axios';
 import VueAxios from 'vue-axios'
+
+
 axios.defaults.withCredentials = true;
+
 
 //Vue.config.productionTip = false
 createApp(app)

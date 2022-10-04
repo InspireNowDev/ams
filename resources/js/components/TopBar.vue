@@ -8,7 +8,7 @@
       justify-between
       px-2
       py-3
-      bg-cyan-500
+      bg-indigo-600
       mb-3
     "
   >
@@ -90,6 +90,29 @@
             <span class="ml-2">{{ navElement }}</span>
           </router-link>
         </ul>
+        <!--<div>
+          <a href="#" v-on:click.prevent="showDropDown = !showDropDown">
+            <div>Catness</div>
+            <img src="..." alt="avatar" />
+            <i
+              :class="{
+                'fa-caret-up': showDropDown,
+                'fa-caret-down': !showDropDown,
+              }"
+              class="fa"
+              aria-hidden="true"
+            ></i>
+          </a>
+          <div v-if="showDropDown">
+            <ul class="menu list pl0 pa0 ma0">
+              <li v-for="link in links" class="list">
+                <a href="#" class="dd-link pointer hover-bg-moon-gray">{{
+                  link.name
+                }}</a>
+              </li>
+            </ul>
+          </div> 
+        </div>-->
       </div>
     </div>
   </nav>
