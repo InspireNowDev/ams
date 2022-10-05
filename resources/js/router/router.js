@@ -28,26 +28,45 @@ const routes = [
         name: 'set-password',
         component: () => import("@/pages/auth-pages/SetPassword.vue")
     },
+    // credentials setup
+
+    // home page setup
     {
-        path: '/welcome',
+        path: '/Profile',
         beforeEnter: checkCredentials,
-        name: 'welcome',
-        component: () => import("@/pages/Welcome.vue")
+        name: 'Profile',
+        component: () => import("@/pages/protected/Profile.vue")
     },
+    {
+        path: '/Home',
+        beforeEnter: checkCredentials,
+        name: 'Home',
+        component: () => import("@/pages/protected/Home.vue")
+    },
+
+    // protected view setup
     {
         path: '/users',
-        beforeEnter: checkRole,
+        beforeEnter: checkAdmin,
         name: 'users',
-        component: () => import("@/pages/Users.vue")
+        component: () => import("@/pages/admin/Users.vue")
     },
+    {
+        path: '/admins',
+        beforeEnter: checkSuper,
+        name: 'admins',
+        component: () => import("@/pages/adminSuper/Admins.vue")
+    },
+
+    // route control setup
     {
         path: '/unauthorized',
         name: "unauthorized",
-        component: () => import("@/pages/Unauthorized.vue")
+        component: () => import("@/pages/public/Unauthorized.vue")
     },
     {
         path: '/:pathMatch(.*)*',
-        component: () => import("@/pages/PageNotFound.vue")
+        component: () => import("@/pages/public/PageNotFound.vue")
     },
     //reroutes to page not found page when the link does not exist 
 ];
@@ -58,16 +77,24 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes
 });
-
+// function check if user logged in 
 function checkCredentials(to, from, next) {
     if (to.name !== 'login' && !store.state.userLoggedIn) next({ name: 'login' })
-    if (to.name === 'login' && store.state.userLoggedIn) next({ name: 'welcome' })
+    if (to.name === 'login' && store.state.userLoggedIn) next({ name: 'Profile' })
     else next();//check user role path
 }
-function checkRole(to, from, next) {    //if (store.state.userCredentials.userRole == "Super-admin") { console.log(store.state.userCredentials.userRole); next(); }  // they are  
-    if (store.state.userLoggedIn && store.state.userRole === "admin") next()
+// function check if user is admin or super admin
+function checkAdmin(to, from, next) {    //if (store.state.userCredentials.userRole == "Super-admin") { console.log(store.state.userCredentials.userRole); next(); }  // they are  
+    if (store.state.userLoggedIn && (store.state.userRole === "Admin" || store.state.userRole === 'Super-Admin')) next()
     else next({ name: 'unauthorized' }); // we are authorized, continue on to the requested route
 }
+// function check if user is super admin
+function checkSuper(to, from, next) {    //if (store.state.userCredentials.userRole == "Super-admin") { console.log(store.state.userCredentials.userRole); next(); }  // they are  
+    if (store.state.userLoggedIn && store.state.userRole === "Super-Admin") next()
+    else next({ name: 'unauthorized' }); // we are authorized, continue on to the requested route
+}
+
+
 
 // router.beforeEach((to, from, next) => {
 //     if (to.name !== 'login' && !store.state.userLoggeIin) {

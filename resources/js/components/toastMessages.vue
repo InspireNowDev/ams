@@ -83,6 +83,10 @@
         ></path>
       </svg>
     </button>
+    <!-- <div
+        class="np-progress-loader"
+        v-bind:style="'width:' + loadedPercentage + '%'"
+      ></div> -->
   </div>
 </template>
 <script>
@@ -95,19 +99,39 @@ export default {
   created() {
     setTimeout(() => {
       this.dismissToast();
-    }, 1500);
+    }, this.timeout);
+
   },
   computed: {},
   methods: {
     dismissToast() {
       this.$store.commit("clearToast", this.toast.title);
     },
+    // startCountdown(){
+    //     this.loadedPercentage = setInterval(() => {
+    //     if (timer === 0) {
+    //         clearInterval(interval)                
+    //     } else {
+    //         timer--
+    //         console.log(timer)
+    //     }             
+    //     }, 1000)
+    //     }
   },
+  data(){
+    return{
+        loadedPercentage :100,
+        timeout: 3500,
+    }
+  }
 };
 </script>
 <style scoped>
 .danger {
   background-color: rgb(255, 156, 156);
   color: white;
+}
+.np-progress-loader{
+    background-color: white;
 }
 </style>

@@ -137,20 +137,7 @@
       <form class="mt-8 space-y-6" v-on:submit.prevent="login()">
         <input type="hidden" name="remember" value="true" />
         <div class="space-y-6">
-          <!-- https://mui.com/material-ui/react-text-field/ -->
-          <!-- <div class="floating relative">
-              <input id="email" type="email" name="email" placeholder=" " autocomplete="email" required="" class="block p-3 w-full text-base appearance-none rounded-md border-transparent focus:outline-none bg-transparent" />
-              <label>Email address</label>
-              <fieldset>
-                  <legend><span>Email address</span></legend>
-              </fieldset>
-          </div> -->
-          <FloatingInput
-            id="emailAdress"
-            label="Email address"
-            type="email"
-            name="email"
-            placeholder=" "
+          <FloatingInput  id="emailAdress" label="Email address"  type="email" name="email" placeholder=" "
             @custom-change="handleEmail"
           />
           <FloatingInput
@@ -271,12 +258,15 @@ export default {
         .then((response) => {
           this.$store.commit("login", response.data.user);
           this.$store.commit("token_set", response.data.access_token);
-          this.$store.commit("role_set", "admin"); //hardset here but will be pulled from BE later
-          this.myRouter.push("welcome");
+          this.$store.commit("role_set", "Admin");//hardset here but will be pulled from BE later
+          //Super-Admin 
+          //Admin
+          //User 
+          this.myRouter.push("profile");
         })
         .catch((error) => {
           this.$store.commit("addToast", {
-            title: "Hello Vuex!",
+            title: "invalid credentials",
             type: "danger",
             message: "your password or username is incorrect",
           });

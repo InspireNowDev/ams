@@ -70,7 +70,32 @@
       >
         <ul
           class="flex flex-col lg:flex-row list-none ml-auto"
-          v-if="role === 'admin'"
+          v-if="role === 'Super-Admin'"
+        >
+          <router-link
+            class="
+              px-3
+              py-2
+              flex
+              items-center
+              text-xs
+              uppercase
+              font-bold
+              text-white
+              leading-snug
+              hover:opacity-75
+              nav-item
+            "
+            v-for="SuperAdminElement in SuperAdminElements"
+            :key="SuperAdminElement"
+            :to="SuperAdminElement"
+          >
+            <span class="ml-2">{{ SuperAdminElement }}</span>
+          </router-link>
+        </ul>
+        <ul
+          class="flex flex-col lg:flex-row list-none ml-auto"
+          v-else-if="role === 'Admin'"
         >
           <router-link
             class="
@@ -114,11 +139,21 @@
             <span class="ml-2">{{ UserElement }}</span>
           </router-link>
         </ul>
-        <button @click="profileShown = !profileShown">Profile</button>
+
+        <!-- <button @click="profileShown = !profileShown">Profile</button> -->
         <div v-show="profileShown" class="card-holder">
-          <UserCard />
+          <UserCard/>
         </div>
-        <button @click="logOut">LOG OUT</button>
+        <button class="m-4" @click="logOut"><span class="">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 483.336 483.336" style="enable-background:new 0 0 483.336 483.336;" xml:space="preserve">
+                <g>
+                  <g>
+                    <path d="M241.668,0C108.198,0,0,108.198,0,241.668c0,133.471,108.198,241.668,241.668,241.668    c133.469,0,241.668-108.197,241.668-241.668C483.336,108.198,375.137,0,241.668,0z M221.677,28.424h39.982v212.355h-39.982V28.424    z M241.668,434.912c-106.556,0-193.245-86.688-193.245-193.244c0-73.207,40.583-139.277,105.911-172.428l18.091,35.655    c-51.824,26.297-84.02,78.706-84.02,136.772c0,84.511,68.751,153.263,153.263,153.263c84.51,0,153.263-68.752,153.263-153.263    c0-58.064-32.192-110.472-84.018-136.77l18.091-35.655c65.324,33.152,105.908,99.219,105.908,172.426    C434.912,348.225,348.225,434.912,241.668,434.912z"/>
+                  </g> 
+                </g>
+        </svg>
+        </span></button>
+        
       </div>
     </div>
   </nav>
@@ -134,11 +169,11 @@ export default {
   data() {
     return {
       showMenu: false,
-      AdminElements: ["my-users", "profile", "users", "set-roles"],
-      UserElements: ["my-profile", "data"],
+      SuperAdminElements: [ "Home" , "profile" ,"admins", "users" ],
+      AdminElements: [ "Home" , "profile" , "users"],
+      UserElements: [ "Home" , "profile" ],
       activeTab: "welcome",
       profileShown: false,
-
       myRouter: useRouter(),
     };
   },
