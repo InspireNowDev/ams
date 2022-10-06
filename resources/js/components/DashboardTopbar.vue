@@ -41,7 +41,7 @@
           href="/welcome"
         >
           <!-- admin or user messsage -->
-          <h1>{{ role }}</h1>
+          <h1>{{ role }} Dashboard</h1>
         </a>
         <button
           class="
@@ -134,7 +134,7 @@
             "
             v-for="UserElement in UserElements"
             :key="UserElement"
-            :to="UserElement"
+            :to="{name:'UserElement'}"
           >
             <span class="ml-2">{{ UserElement }}</span>
           </router-link>
@@ -169,8 +169,8 @@ export default {
   data() {
     return {
       showMenu: false,
-      SuperAdminElements: [ "Home" , "profile" ,"admins", "users" ],
-      AdminElements: [ "Home" , "profile" , "users"],
+      SuperAdminElements: [ "Home" , "profile" ,"admins", "users", "roles" ],
+      AdminElements: [ "Home" , "profile" , "users","roles"],
       UserElements: [ "Home" , "profile" ],
       activeTab: "welcome",
       profileShown: false,

@@ -164,6 +164,7 @@
                 text-indigo-600
                 focus:ring-indigo-500
               "
+              v-model="remember_me"
             />
             <label for="remember-me" class="ml-2 block text-sm text-gray-900"
               >Remember me</label
@@ -205,7 +206,7 @@
             :class="!isComplete ? 'disabled' : 'enabled'"
             :disabled="!isComplete"
           >
-            <span v-if="this.processing">Processing..</span>
+            <span v-if="this.processing">Processing...</span>
             <span v-else> Sign in</span>
           </button>
         </div>
@@ -236,6 +237,7 @@ export default {
         email: "",
         password: "",
       },
+      remember_me: false,
       message: "",
       validationErrors: {},
       processing: false,
@@ -258,11 +260,12 @@ export default {
         .then((response) => {
           this.$store.commit("login", response.data.user);
           this.$store.commit("token_set", response.data.access_token);
-          this.$store.commit("role_set", "Admin");//hardset here but will be pulled from BE later
+          this.$store.commit("role_set", "Super-Admin");//hardset here but will be pulled from BE later
+          this.$store.commit("setRemember",this.remember_me)
           //Super-Admin 
           //Admin
           //User 
-          this.myRouter.push("profile");
+          this.myRouter.push("home");
         })
         .catch((error) => {
           this.$store.commit("addToast", {
@@ -291,7 +294,14 @@ export default {
     isComplete() {
       return this.credentials.email != "" && this.credentials.password != "";
     },
+    remember_user(){
+      return this.$store.getters.userRemember;
+    }
   },
+  created(){
+      this.remember_me = this.$store.getters.userRemember;
+      //this.credentials.email = this.$store.getters.userEmail;
+  }
 };
 </script>
 <style scoped>
