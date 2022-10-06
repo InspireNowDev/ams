@@ -14,7 +14,8 @@ const store = createStore({
             },
             login_token: "",
             userRole: "admin",
-            toasts: []
+            toasts: [],
+            user_remember: false,
         }
 
     },
@@ -44,7 +45,11 @@ const store = createStore({
         },
         role_set(state, user_role) {
             state.userRole = user_role;
+        },
+        setRemember(state, remember_me ){
+            state.user_remember = remember_me;
         }
+    
     },
     getters: {
         userID(state) {
@@ -64,6 +69,9 @@ const store = createStore({
         },
         userisLoggedIn(state) {
             return state.userLoggedIn;
+        },
+        userRemember(state){
+            return state.user_remember;
         }
     },
     setters: {

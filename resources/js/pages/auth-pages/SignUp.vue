@@ -326,6 +326,12 @@ export default {
           console.log(response.data.status);
           console.log(response.data.message);
           this.LVresponse = "check your email to confirm register";
+          this.redirectToLogin();
+           this.$store.commit("addToast", {
+            title: "success",
+            type: "primary",
+            message: "Check your email address for a password reset link",
+          });
           //this.myRouter.push("set-password"); push to profilecreated  page
         })
         // .catch(function (error) {

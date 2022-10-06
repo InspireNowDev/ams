@@ -1,112 +1,95 @@
-// this page still in the works , might break in  abit
-
 <template>
-  <div class="flex justify-center items-center mt-52">
-    <!-- <h1>{{ $route.params.id }}</h1>
-    <h1>{{ $route.params.token }}</h1> -->
-    <div class="w-full max-w-xs">
-      <div v-if="this.passwordMsg">{{ this.passwordMsg }}</div>
-      <form
-        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        v-on:submit.prevent="setPass()"
-      >
-        <label class="block text-gray-700 text-md mb-2">
-          Enter your password and confirm to set your password</label
+ <!-- div new  -->
+    <div
+    class="
+      flex flex-col
+      min-h-full
+      items-center
+      justify-center
+      py-12
+      px-4
+      sm:px-6
+      lg:px-8
+    "
+  >
+    <div class="w-full max-w-md space-y-8 p-9 bg-white rounded-xl">
+      <div>
+        <h2
+          class="
+            mt-6
+            text-center text-3xl
+            font-bold
+            tracking-tight
+            text-gray-900
+          "
         >
-        <div class="passwordInit-input mb-4">
-          <label
-            for="password_confirm"
-            class="block text-gray-700 text-sm font-bold mb-2"
-            >Enter Password</label
-          >
-          <input
-            class="
-              shadow
-              appearance-none
-              borderrounded
-              w-full
-              py-2
-              px-3
-              text-gray-700
-              mb-3
-              leading-tight
-              focus:outline-none focus:shadow-outline
-            "
-            id="passInit"
-            type="password"
-            placeholder="*******"
-            v-model="password"
-            required
+         Set up your password
+        </h2>
+      </div>
+      <form class="mt-8 space-y-6" v-on:submit.prevent="setPass()">
+        <input type="hidden" name="remember" value="true" />
+        <div class="space-y-6">
+          <FloatingInput  id="passInit" label="Enter Password"  type="password" name="password" placeholder=" " @custom-change="handlePW"
           />
+
           <PassStrength :message="msg.password1" :key="msg.password1" />
-          <!-- <span v-if="msg.password1">{{ msg.password1 }}</span> -->
-        </div>
-        <div class="password_confirm-input mb-6">
-          <label
-            for="password_confirm"
-            class="block text-gray-700 text-sm font-bold mb-2"
-            >Re-enter Password</label
-          >
 
-          <input
-            class="
-              shadow
-              appearance-none
-              borderrounded
-              w-full
-              py-2
-              px-3
-              text-gray-700
-              mb-3
-              leading-tight
-              focus:outline-none focus:shadow-outline
-            "
-            id="password_confirm"
-            v-model="password_confirm"
-            type="password"
-            placeholder="*******"
-            required
+          <FloatingInput  id="passwordCFM" label="Re-enter Password" type="password" name="passwordCfm" placeholder=" "  @custom-change="handlePW2"
           />
+
           <PassStrength :message="msg.password2" :key="msg.password2" />
-          <!-- <span v-if="msg.password2 == 'weak'" class="weak">{{
-            msg.password2
-          }}</span>
-          <span v-else-if="msg.password2 == 'okay'" class="okay">{{
-            msg.password2
-          }}</span>
-          <span v-else class="strong">{{ msg.password2 }}</span> -->
-          <!-- //can be in a component -->
         </div>
 
-        <div class="flex items-center justify-end">
+
+        <div>
           <button
+            type="submit"
             class="
-              bg-blue-600
-              hover:bg-black
-              text-white
-              font-bold
+              group
+              relative
+              flex
+              w-full
+              justify-center
+              rounded-md
+              border border-transparent
+              bg-indigo-600
               py-2
               px-4
-              rounded
-              focus:outline-none focus:shadow-outline
+              text-sm
+              font-medium
+              text-white
+              hover:bg-indigo-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-indigo-500
+              focus:ring-offset-2
             "
-            type="submit"
+            :class="!isComplete ? 'disabled' : 'enabled'"
+            :disabled="!isComplete"
           >
-            Confirm
+            <span v-if="this.processing">Processing...</span>
+            <span v-else> Confirm</span>
           </button>
         </div>
       </form>
     </div>
-  </div>
-</template>
+    <Toasts />
+    <!-- <Toast v-if="this.message" message="wtv however" toast-type="normal" /> example toast -->
+    <!-- toasts can be used like a component and passed message and type of toast to be shown -->
+ </div>
+</template> 
 
 <script>
-import PassStrength from "../../components/PassStrength.vue";
+import PassStrength from "@/components/PassStrength.vue";
 import { useRouter } from "vue-router";
+import FloatingInput from "@/components/FloatingInput.vue";
+import Toasts from "@/components/ToastContainer.vue";
 
 export default {
   components: {
     PassStrength,
+    FloatingInput,
+    Toasts
   },
   data() {
     return {
@@ -116,6 +99,7 @@ export default {
       password: "",
       password_confirm: "",
       passwordMsg: "",
+      processing: false,
       msg: [],
       disabled: [true, true],
       myRouter: useRouter(),
@@ -139,7 +123,12 @@ export default {
         password_confirm: this.password_confirm,
       };
       //check if the passwords match before encrypting and sending it to the backend
-      if (this.password === this.password_confirm) {
+      if (this.password.length <=8  ){
+        this.passwordMsg = "passwords length is not long enough";
+         console.log("passwords length is not long enough");
+      }
+      else if (this.password === this.password_confirm && this.password.length >=8  ) {
+        this.processing = true;
         axios
           .post(
             `/api/set-password/${this.$route.params.id}/${this.$route.params.token}`,
@@ -150,7 +139,10 @@ export default {
             this.passwordMsg = "password set succesfully";
             this.myRouter.push({ name: "login" });
           })
-          .catch((error) => console.log(error.response));
+          .catch((error) => console.log(error.response))
+          .finally(() => {
+              this.processing = false;
+            });
       } else {
         this.passwordMsg = "passwords dont match";
         console.log("passwords do not match");
@@ -166,8 +158,23 @@ export default {
       } else if (value.length < 8) {
         this.msg[val] = "strong";
       }
+    }, 
+    handlePW(s) {
+      this.password = s;
     },
+    handlePW2(s) {
+      this.password_confirm = s;
+    },
+ 
   },
+   computed:{
+     toasts() {
+      return this.$store.state.toasts;
+    },
+     isComplete() {
+      return this.password != "" && this.password_confirm != "";
+    },
+  }
 };
 </script>
 <style scoped>

@@ -57,6 +57,12 @@ const routes = [
         name: 'admins',
         component: () => import("@/pages/adminSuper/Admins.vue")
     },
+    {
+        path: '/roles',
+        beforeEnter: checkSuper,
+        name: 'roles',
+        component: () => import("@/pages/admin/Roles.vue")
+    },
 
     // route control setup
     {
@@ -80,7 +86,7 @@ const router = createRouter({
 // function check if user logged in 
 function checkCredentials(to, from, next) {
     if (to.name !== 'login' && !store.state.userLoggedIn) next({ name: 'login' })
-    if (to.name === 'login' && store.state.userLoggedIn) next({ name: 'Profile' })
+    if (to.name === 'login' && store.state.userLoggedIn) next({ name: 'Home' })
     else next();//check user role path
 }
 // function check if user is admin or super admin

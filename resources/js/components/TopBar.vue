@@ -85,7 +85,7 @@
             "
             v-for="navElement in navElements"
             :key="navElement"
-            :to="navElement"
+            :to="navElement" 
           >
             <span class="ml-2">{{ navElement }}</span>
           </router-link>
