@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -66,7 +67,14 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $role = Role::find($user['roles']);
+        
+        return response()->json([
+            'status' => true,
+            'message' => "User fetch successfully",
+            'user' => $user,
+            'role' => $role,
+        ], 200);
     }
 
     /**

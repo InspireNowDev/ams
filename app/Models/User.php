@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 //use Laravel\Sanctum\HasApiTokens;
 use Laravel\Passport\HasApiTokens;
 
@@ -25,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'firstname',
         'lastname',
         'useragree',
+        'roles',
     ];
 
     /**
@@ -45,4 +47,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles_be()
+    {
+        return $this->belongsTo(Role::class, null, 'roles');
+    }
 }
