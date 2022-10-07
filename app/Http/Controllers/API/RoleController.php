@@ -48,18 +48,7 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
-        $validated = $request->validated();
-
-        if ($validated->fails()) {
-            return response()->json([
-                'errors' => $validated->errors()
-            ], 422);
-        }
-
-        $role = Role::create([
-            'role_title' => $request->role_title,
-            'role_desc' => $request->role_desc,
-        ]);
+        $role = Role::create($request->validated());
 
         return response()->json([
             'status' => true,
