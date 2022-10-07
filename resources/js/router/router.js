@@ -59,7 +59,7 @@ const routes = [
     },
     {
         path: '/roles',
-        beforeEnter: checkSuper,
+        beforeEnter: checkAdmin,
         name: 'roles',
         component: () => import("@/pages/admin/Roles.vue")
     },

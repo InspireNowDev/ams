@@ -16,8 +16,8 @@
             <div class="role-inputs m-5 ml-auto mr-auto p-5 rounded bg-slate-100" v-if="showInput" >    
                 <h2 class="mb-3">Input the details for what you want to enter</h2>
                 <!-- <input type="text" v-model="new_roles.role_id" placeholder="role ID"/> -->
-                <input type="text" v-model="new_roles.role_title" placeholder="role Title" />
-                <input type="text" v-model="new_roles.role_description" placeholder="Role Description" />
+                <input type="text" v-model="new_roles.role_title" placeholder="role Title"  class="p-3"/>
+                <input type="textarea" v-model="new_roles.role_desc" placeholder="Role Description" class="p-3" />
                 <button   class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600  py-2 px-4 text-sm
                 font-medium
                 text-white
@@ -32,17 +32,20 @@
             </button>
             </div>
         </div>
+       
         <ul class="w-auto ml-10 list-container">
-            <li  class="list-item"> <span  class="role_title px-5 w-36 "> Role Title</span> <span  class="role_description w-60 ">Role Description</span> <span  class="role_description">Permissions here</span></li>  
+            <li  class="list-item"> <span  class="role_title px-5 w-36 "> Role Title</span> <span  class="role_description w-60 ">Role Description</span> <span  class="role_description">Permissions here</span></li>
+             <span v-if="this.loading"> loading roles data</span>  
             <!-- list of permissions here -->
             <li v-for="role in roles" :key="role" class="list-item">
                 <div class="flex flex-">
                 <!-- <span>{{role.role_id}}</span> -->
-                
+                    <span>{{role.key}}</span>
                     <span class="role_title px-5 w-36 ">{{role.role_title}}</span>
-                    <span class="role_description ">{{role.role_description}}</span>
+                    <span class="role_description ">{{role.role_desc}}</span>
                 </div>
             </li>
+            <li  v-if="this.load_newrole" class="list-item" > item being added... </li>
         </ul>
     </div>
 </template>
@@ -50,36 +53,61 @@
 export default {
     data() {
         return{
-            roles:[
-               
-            ],        
+            roles:[],        
             new_roles:{
                 role_title:'',
-                role_description:''
+                role_desc:''
             },
             showInput :false,
+            loading :false,
+            load_newrole : false
         }
     },
     methods:{
-        addRole(){
+        async addRole(){
+            // post api here
+            this.load_newrole = true;
             const data =  {
                            // role_id: this.new_roles.role_id,
                             role_title: this.new_roles.role_title,
-                            role_description: this.new_roles.role_description
+                            role_desc: this.new_roles.role_desc
                         }
-            this.roles = [...this.roles, data];
-            //this.new_roles.role_id = "";
+            await axios.post("api/roles/",data)
+            .then((response) =>{
+                console.log(response);
+                // catch response here and append to array
+                 this.roles = [...this.roles, response.data.role];
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
+            .finally(() =>{
+                this.load_newrole = false;
+            })
+           
             this.new_roles.role_title = "";  
-            this.new_roles.role_description = "";   
-            console.log(this.roles);
-            this.showInput = false;
+            this.new_roles.role_desc = "";   
+            this.showInput = false; //hide input field
         },
         showInputs(){
             this.showInput = true;
         }
 
-    }
-
+    },
+    async created(){
+            this.loading = true;
+        
+            await axios.get("/api/roles")
+            .then((response) => {
+            this.roles = response.data.role;
+                })
+            .catch((error) => {
+                console.log(error);
+                })
+            .finally(() => {
+                this.loading = false;
+                });
+        }
 }
 </script>
 <style scoped>

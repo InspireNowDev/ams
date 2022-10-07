@@ -95,7 +95,7 @@
         </ul>
         <ul
           class="flex flex-col lg:flex-row list-none ml-auto"
-          v-else-if="role === 'Admin'"
+          v-else-if="role === 'admin'"
         >
           <router-link
             class="
@@ -168,7 +168,7 @@ export default {
     return {
       showMenu: false,
       SuperAdminElements: [ "Home" , "profile" ,"admins", "roles", "users" ],
-      AdminElements: [ "Home" , "profile" , "users","roles"],
+      AdminElements: [ "Home" , "profile" , "roles" , "users"],
       UserElements: [ "Home" , "profile" ],
       activeTab: "welcome",
       myRouter: useRouter(),

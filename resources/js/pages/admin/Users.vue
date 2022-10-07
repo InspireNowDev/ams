@@ -1,5 +1,6 @@
 <template>
 <ul>
+  <span v-show="this.loading"> loading user data ...</span>
  <li v-for="user in  users" :key="user" class="w-100% justify-between m-3 ">
             <div class="flex justify-between w-100% rounded border-2  border-gray-200 p-3">
             <span class="" >{{user.id}}</span>
@@ -20,19 +21,26 @@ export default {
     return{
         users:[],
         roles:[],
-
+        loading : false
     }
   },
   async created(){
-     const response = await axios.get("http://localhost:8000/api/users")
-     console.log(response);
-      //this.$store.commit("setUsers",response.data.users);
+    this.loading = true;
+    let id = 3;//users only
+    await axios.get("/api/users/roles/"+id)
+    .then((response) => {
+      console.log(response.data);
       this.users = response.data.users;
-      console.log(this.$store.state.users);
+      this.roles = response.data.role;
+        })
+    .catch((error) => {
+         console.log(error);
+        })
+      .finally(() => {
+          this.loading = false;
+        });
 
-      this.roles = this.$store.getters.userRoles;
-      
-  }
+   }
 
 }
 </script>
