@@ -6,6 +6,7 @@
 >>> php artisan serve
 >>> npm install 
 >>> npm run dev
+>>> php artisan db:seed
 
 >>>for local mail host in .env file , replace
     MAIL_MAILER=smtp

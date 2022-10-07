@@ -26,6 +26,18 @@ class UserController extends Controller
         ]);
     }
 
+    public function getUserByRole($roleID)
+    {
+        $users = User::where('roles','=', $roleID)->get();
+        $role = app('App\Http\Controllers\API\RoleController')->getRole();
+
+        return response()->json([
+            'status' => true,
+            'users' => $users,
+            'role' => $role
+        ]);
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
