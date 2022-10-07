@@ -70,7 +70,7 @@
       >
         <ul
           class="flex flex-col lg:flex-row list-none ml-auto"
-          v-if="role === 'Super-Admin'"
+          v-if="role === 'super-admin'"
         >
           <router-link
             class="
@@ -134,16 +134,14 @@
             "
             v-for="UserElement in UserElements"
             :key="UserElement"
-            :to="{name:'UserElement'}"
+            :to="UserElement"
           >
             <span class="ml-2">{{ UserElement }}</span>
           </router-link>
         </ul>
 
-        <!-- <button @click="profileShown = !profileShown">Profile</button> -->
-        <div v-show="profileShown" class="card-holder">
-          <UserCard/>
-        </div>
+      
+      
         <button class="m-4" @click="logOut"><span class="">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 483.336 483.336" style="enable-background:new 0 0 483.336 483.336;" xml:space="preserve">
                 <g>
@@ -169,11 +167,10 @@ export default {
   data() {
     return {
       showMenu: false,
-      SuperAdminElements: [ "Home" , "profile" ,"admins", "users", "roles" ],
+      SuperAdminElements: [ "Home" , "profile" ,"admins", "roles", "users" ],
       AdminElements: [ "Home" , "profile" , "users","roles"],
       UserElements: [ "Home" , "profile" ],
       activeTab: "welcome",
-      profileShown: false,
       myRouter: useRouter(),
     };
   },
@@ -187,13 +184,6 @@ export default {
       //this.$store.state.userLoggedIn = false;
       //this.$store.state.userName = "";
       this.myRouter.push("login");
-    },
-    openProfile() {
-      this.profileShown = true;
-    },
-    hideProfile() {
-      this.profileShown = false;
-      console.log("clicked off");
     },
   },
   computed: {

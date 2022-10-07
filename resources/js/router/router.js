@@ -91,12 +91,12 @@ function checkCredentials(to, from, next) {
 }
 // function check if user is admin or super admin
 function checkAdmin(to, from, next) {    //if (store.state.userCredentials.userRole == "Super-admin") { console.log(store.state.userCredentials.userRole); next(); }  // they are  
-    if (store.state.userLoggedIn && (store.state.userRole === "Admin" || store.state.userRole === 'Super-Admin')) next()
+    if (store.state.userLoggedIn && (store.state.userRole === "admin" || store.state.userRole === 'super-admin')) next()
     else next({ name: 'unauthorized' }); // we are authorized, continue on to the requested route
 }
 // function check if user is super admin
 function checkSuper(to, from, next) {    //if (store.state.userCredentials.userRole == "Super-admin") { console.log(store.state.userCredentials.userRole); next(); }  // they are  
-    if (store.state.userLoggedIn && store.state.userRole === "Super-Admin") next()
+    if (store.state.userLoggedIn && store.state.userRole === "super-admin") next()
     else next({ name: 'unauthorized' }); // we are authorized, continue on to the requested route
 }
 

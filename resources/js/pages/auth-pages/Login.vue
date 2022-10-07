@@ -260,8 +260,9 @@ export default {
         .then((response) => {
           this.$store.commit("login", response.data.user);
           this.$store.commit("token_set", response.data.access_token);
-          this.$store.commit("role_set", "Super-Admin");//hardset here but will be pulled from BE later
-          this.$store.commit("setRemember",this.remember_me)
+          this.$store.commit("role_set",response.data.role.role_title);//response.data.role.role_title
+          console.log( response.data.role.role_title);
+          this.$store.commit("setRemember",this.remember_me);
           //Super-Admin 
           //Admin
           //User 

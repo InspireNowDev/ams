@@ -1,39 +1,38 @@
 <template>
-  <div>This view is protected only to be seen by super admins or admins only</div>
+<ul>
+ <li v-for="user in  users" :key="user" class="w-100% justify-between m-3 ">
+            <div class="flex justify-between w-100% rounded border-2  border-gray-200 p-3">
+            <span class="" >{{user.id}}</span>
+            <span>{{user.name}}</span>
+            <span>{{user.roles }}</span>
+            <select id="roles_select" v-model="user.roles">
+              <option v-for="role in roles" :key="role" >{{role.role_title}}</option>
+            </select>
+            <!-- <select name="" id="roles_select" v-model="this.admin.sub_role"><option :value="role" v-for="role in this.roles" :key="role" >{{role}}</option> </select> -->
+            </div>
+        </li>
+    </ul>
 </template>
 <script>
 
 export default {
   data() {
     return{
-        user:[
-          { 
-              id: '1',
-              username: 'user name satu',
-              email: "emai@gmail.com",
-              role : 'Manager',
-          },
-           {
-              id: '2',
-              username: 'user name 2',
-              email: "emai@gmail.com",
-              role : 'User',
+        users:[],
+        roles:[],
 
-          },
-           {
-              id: '3',
-              username: 'user name 3',
-              email: "emai@gmail.com",
-              role : 'generic',
-          },
-           {
-              id: '4',
-              username: 'user name 4',
-              email: "emai@gmail.com",
-              role : 'role 2',
-          },
-        ]
     }
   },
+  async created(){
+     const response = await axios.get("http://localhost:8000/api/users")
+     console.log(response);
+      //this.$store.commit("setUsers",response.data.users);
+      this.users = response.data.users;
+      console.log(this.$store.state.users);
+
+      this.roles = this.$store.getters.userRoles;
+      
+  }
+
 }
 </script>

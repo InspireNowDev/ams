@@ -12,11 +12,29 @@ const store = createStore({
                 id: 0,
                 email: "",
             },
-            login_token: "",
-            userRole: "admin",
-            toasts: [],
-            user_remember: false,
-        }
+            users:[],
+
+            roles:[{
+                    role_id : '1',
+                    role_title : 'Shopper',
+                    role_description : 'Role is for free user or whatever'
+                },
+                {
+                    role_id : '2',
+                    role_title : 'Manager',
+                    role_description : 'Role is for free user or whatever no real reason'
+                },
+                {
+                    role_id : '3',
+                    role_title : 'Test',
+                    role_description : 'Role is for free user or whatever'
+                }],
+
+                login_token: "",
+                userRole: "admin",
+                toasts: [],
+                user_remember: false,
+            }
 
     },
     mutations: {
@@ -33,6 +51,7 @@ const store = createStore({
         login(state, userCredentials) {
             state.userCredentials = userCredentials;
             state.userLoggedIn = true;
+            state.users = [];
         },
         logout(state) {
             state.userLoggedIn = false;
@@ -48,6 +67,10 @@ const store = createStore({
         },
         setRemember(state, remember_me ){
             state.user_remember = remember_me;
+        },
+        // set user array
+        setUsers(state, data){
+            state.users = [...state.users, data];
         }
     
     },
@@ -72,6 +95,9 @@ const store = createStore({
         },
         userRemember(state){
             return state.user_remember;
+        },
+        userRoles(state){
+            return state.roles;
         }
     },
     setters: {
