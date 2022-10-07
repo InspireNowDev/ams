@@ -33,6 +33,8 @@
             </div>
         </div>
         <ul class="w-auto ml-10 list-container">
+            <li  class="list-item"> <span  class="role_title px-5 w-36 "> Role Title</span> <span  class="role_description w-60 ">Role Description</span> <span  class="role_description">Permissions here</span></li>  
+            <!-- list of permissions here -->
             <li v-for="role in roles" :key="role" class="list-item">
                 <div class="flex flex-">
                 <!-- <span>{{role.role_id}}</span> -->
@@ -105,7 +107,7 @@ export default {
     display: flex;
     border-radius: 6px;
     border: 1px solid grey;
-    width: 100%
-
+    width: 100%;
+    text-align: left;
 }
 </style>
