@@ -3,30 +3,32 @@
       {{ label }}
       <input type="text" :name="name" :value="value" @input="onInput" @change="onChange" />
     </label> -->
-    <div class="relative">
-        <input :id="id" :type="type" :name="name" :value="value" :placeholder="placeholder" :autocomplete="autocomplete" @input="onInput" @change="onChange" class="block p-3 w-full text-base appearance-none rounded-md border-transparent focus:outline-none bg-transparent" />
-        <label>{{ label }}</label>
-        <fieldset>
-            <legend><span>{{ label }}</span></legend>
-        </fieldset>
-    </div>
-
+  <div class="relative">
+    <input :id="id" :type="type" :name="name" :value="modelValue" :placeholder="placeholder" :autocomplete="autocomplete" @input="onInput" @change="onChange" class="block p-3 w-full text-base appearance-none rounded-md border-transparent focus:outline-none bg-transparent"/>
+    <label>{{ label }}</label>
+    <fieldset>
+      <legend>
+        <span>{{ label }}</span>
+      </legend>
+    </fieldset>
+  </div>
 </template>
 
 <script>
 export default {
-name: 'FloatingInput',
-props: {
-    type : { type: String, required: false},
-    value : { type: String, required: false},
-    name : { type: String, required: true, default: ''},
-    label: { type: String, required: true, default: ''},
-    placeholder: { type: String, required: false, default: ''},
-    id: { type: String, required: false, default: ''},
-    autocomplete: { type: String, required: false, default: ''},
-    required: { type: String, required: false, default: ''},
-},
-/* Can add validation here
+  name: "FloatingInput",
+  props: {
+    type: { type: String, required: false },
+    value: { type: String, required: false },
+    name: { type: String, required: true, default: "" },
+    label: { type: String, required: true, default: "" },
+    placeholder: { type: String, required: false, default: "" },
+    id: { type: String, required: false, default: "" },
+    autocomplete: { type: String, required: false, default: "" },
+    required: { type: String, required: false, default: "" },
+    modelValue: String,
+  },
+  /* Can add validation here
 watch: {
     value: {
     handler(newValue, oldValue) {
@@ -38,11 +40,12 @@ computed: {
     /* name() {
     return this.label.toLowerCase();
     }, */
-},
-methods: {
+  },
+  emits:["update:modelValue"],
+  methods: {
     onInput(event) {
-    // Can add validation here
-    this.$emit('input', event.target.value);
+      // Can add validation here
+      this.$emit("update:modelValue", event.target.value);
     },
     onChange(event) { // Supports .lazy
     // Can add validation here
