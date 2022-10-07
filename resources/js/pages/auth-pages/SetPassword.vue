@@ -123,12 +123,12 @@ export default {
         password_confirm: this.password_confirm,
       };
       //check if the passwords match before encrypting and sending it to the backend
-      // if (this.password.length <=8  ){
-      //   this.passwordMsg = "passwords length is not long enough";
-      //    console.log("passwords length is not long enough");
-      // }
-      if (this.password === this.password_confirm  ) {
-        // && this.password.length >=8 
+      if (this.password.length <=8  ){
+        this.passwordMsg = "passwords length is not long enough";
+         console.log("passwords length is not long enough");
+      }
+      else if (this.password === this.password_confirm  && this.password.length >=8  ) {
+  
         this.processing = true;
         axios
           .post(

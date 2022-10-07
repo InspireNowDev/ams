@@ -34,7 +34,7 @@
         </div>
        
         <ul class="w-auto ml-10 list-container">
-            <li  class="list-item"> <span  class="role_title px-5 w-36 "> Role Title</span> <span  class="role_description w-60 ">Role Description</span> <span  class="role_description">Permissions here</span></li>
+            <li  class="list-item table-header bg-slate-100"> <span  class="role_title px-5 w-36 "> Role Title</span> <span  class="role_description w-60 ">Role Description</span> <span  class="role_description">Permissions here</span></li>
              <span v-if="this.loading"> loading roles data</span>  
             <!-- list of permissions here -->
             <li v-for="role in roles" :key="role" class="list-item">
@@ -88,6 +88,9 @@ export default {
             this.new_roles.role_title = "";  
             this.new_roles.role_desc = "";   
             this.showInput = false; //hide input field
+        },
+        deleteRole(){
+
         },
         showInputs(){
             this.showInput = true;
