@@ -94,13 +94,11 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, Role $role)
     {
-        $roles = Role::find($role);
-        $roles->update($request->validated());
+        $roles = Role::where('id', $role['id'])->update($request->validated());
 
         return response()->json([
             'status' => true,
             'message' => "Role updated successfully",
-            'user' => $$roles,
         ], 200);
     }
     /**
