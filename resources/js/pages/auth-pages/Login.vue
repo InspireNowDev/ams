@@ -224,6 +224,7 @@ import { mapActions } from "vuex";
 import FloatingInput from "@/components/FloatingInput.vue";
 //import Toast from "@/components/toastMessages.vue";
 import Toasts from "@/components/ToastContainer.vue";
+import setAuthheader from '../../utils/setAuthHeader';
 
 export default {
   components: {
@@ -258,14 +259,13 @@ export default {
           },
         })
         .then((response) => {
+          // axios.defaults.headers['Authorization']  ='Bearer ' + response.data.access_token;
+          // axios.defaults.headers['Content-Type']='application/json';
+
           this.$store.commit("login", response.data.user);
           this.$store.commit("token_set", response.data.access_token);
-          this.$store.commit("role_set",response.data.role.role_title);//response.data.role.role_title
-          console.log( response.data.role.role_title);
+          this.$store.commit("role_set",response.data.role.role_title);
           this.$store.commit("setRemember",this.remember_me);
-          //Super-Admin 
-          //Admin
-          //User 
           this.myRouter.push("home");
         })
         .catch((error) => {

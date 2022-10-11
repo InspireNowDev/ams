@@ -41,7 +41,8 @@
           href="/welcome"
         >
           <!-- admin or user messsage -->
-          <h1>{{ role }} Dashboard</h1>
+          <h1>{{ role }} Dashboard </h1>
+          
         </a>
         <button
           class="
@@ -180,9 +181,29 @@ export default {
       this.showMenu = !this.showMenu;
     },
     logOut() {
-      this.$store.commit("logout");
+    
+
+      // const config = {
+      //     headers: { Authorization:  'Bearer ' + this.$store.getters.logToken }
+      // };
+      //   console.log( axios.defaults.headers['Authorization'] );
+      //   console.log( config.headers.Authorization );
+
+
+      //axios.defaults.headers['Authorization']  ='Bearer ' +this.$store.getters.logToken;
+
+      axios.post('/api/logout' 
+      // { headers: 
+      //         {"Authorization" : `Bearer ${token}`} }
+      ).then((response) => {
+      console.log(response.data);
+        })
+        .catch((errors) => {
+          console.log(errors)
+        })
       //this.$store.state.userLoggedIn = false;
       //this.$store.state.userName = "";
+      this.$store.commit("logout");
       this.myRouter.push("login");
     },
   },
