@@ -65,7 +65,13 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        $roles = Role::find($role);
+
+        return response()->json([
+            'status' => true,
+            'message' => "Role details",
+            'user' => $roles,
+        ], 200);
     }
 
     /**
@@ -86,11 +92,17 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(RoleRequest $request, Role $role)
     {
-        //
-    }
+        $roles = Role::find($role);
+        $roles->update($request->validated());
 
+        return response()->json([
+            'status' => true,
+            'message' => "Role updated successfully",
+            'user' => $$roles,
+        ], 200);
+    }
     /**
      * Remove the specified resource from storage.
      *
