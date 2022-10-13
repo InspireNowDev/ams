@@ -2,14 +2,7 @@
 <template>
   <nav
     class="
-      relative
-      flex flex-wrap
-      items-center
-      justify-between
-      px-2
-      py-3
-      bg-purple-500
-      mb-3
+      relative flex flex-wrap items-center justify-between px-2 py-3  bg-sky-500/100 mb-3
     "
     v-bind:class="role"
   >
@@ -159,7 +152,7 @@
 </template>
 <script>
 import { useRouter } from "vue-router";
-import UserCard from "../components/userCard.vue";
+import UserCard from "../userCard.vue";
 
 export default {
   components: {

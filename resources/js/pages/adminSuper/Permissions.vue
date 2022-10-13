@@ -1,6 +1,6 @@
 <template>
-    <span v-for ="role in roles" :key="role"> " " {{role.role_title}}  " " </span> 
-    <div v-for ="role in roles" :key="role"> {{role.role_title}}  </div>
+  <!-- permissions page -->
+  permissions page
 </template>
 <script>
 

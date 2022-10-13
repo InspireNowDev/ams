@@ -35,14 +35,14 @@
        
         <ul class="w-auto ml-10 list-container">
             
-            <li  class="list-item table-header bg-slate-100"> <span  class="role_title px-5 w-36 "> Role Title</span> <span  class="role_description w-60 ">Role Description</span> </li>
+            <li  class="list-item table-header bg-slate-100"> <span  class="role_title px-5 w-1/2 "> Role Title</span> <span  class="role_description w-60 ">Role Description</span> </li>
              <span v-if="this.loading"> loading roles data</span>  
             <!-- list of permissions here -->
             <li v-for="role in roles" :key="role" class="list-item"  @dblclick="toggleEditMode">
                 <div class="flex columns-edit">
                 <!-- <span>{{role.role_id}}</span> -->
-                    <span  v-if="!editMode" class="role_title px-5 w-36 ">{{role.role_title}}</span> <input v-show="editMode" type="text" v-model="role.role_title" class="editInputFields pl-4 mr-4 rounded">
-                    <span  v-if="!editMode" class="role_description ">{{role.role_desc}}</span> <input v-show="editMode" type="text" v-model="role.role_desc" class="editInputFields pl-4 mr-4 rounded w-full"/> 
+                    <span  v-if="!editMode" class="role_title px-5 w-1/2 ">{{role.role_title}}</span> <input v-show="editMode" type="text" v-model="role.role_title" class="editInputFields pl-4 mr-4 rounded w-1/2">
+                    <span  v-if="!editMode" class="role_description ">{{role.role_desc}}</span> <input v-show="editMode" type="text" v-model="role.role_desc" class="editInputFields pl-4 mr-4 rounded w-1/2"/> 
                     <!-- @keyup.enter="editRole(role)" @focusout="editRole(role)" -->
                     <button  v-if="editMode" @click="editRole(role)" class="ml-auto group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600  py-2 px-4 text-sm font-medium text-white
                                         hover:bg-indigo-700  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 editRoleBtn"  > Confirm </button>
@@ -50,10 +50,12 @@
             </li>
             <!-- <RolesList />  -->
             <li  v-if="this.load_newrole" class="list-item" > item being added... </li>
-            <span v-show="editMode"> Edit mode </span>
-            <button v-show="editMode" @click = "exitEdit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600  py-2 px-4 text-sm
-                font-medium  text-white  hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
-                focus:ring-offset-2 addRoleBtn mr-auto ml-auto " > [Click to exit Edit mode] </button>
+            <div  class="flex justify-center items-center ">
+                <span v-show="editMode" class="mr-5"> Edit mode: </span>
+                <button v-show="editMode" @click = "exitEdit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600  py-2 px-4 text-sm
+                    font-medium  text-white  hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
+                    focus:ring-offset-2 addRoleBtn " > [Click to exit Edit mode] </button>
+            </div>
         </ul>
     </div>
 </template>

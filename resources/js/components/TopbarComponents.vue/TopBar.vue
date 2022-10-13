@@ -70,19 +70,7 @@
       >
         <ul class="flex flex-col lg:flex-row list-none ml-auto">
           <router-link
-            class="
-              px-3
-              py-2
-              flex
-              items-center
-              text-xs
-              uppercase
-              font-bold
-              leading-snug
-              text-white
-              hover:opacity-75
-              nav-item
-            "
+            class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75 nav-item"
             v-for="navElement in navElements"
             :key="navElement"
             :to="navElement" 

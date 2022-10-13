@@ -83,7 +83,7 @@
 import PassStrength from "@/components/PassStrength.vue";
 import { useRouter } from "vue-router";
 import FloatingInput from "@/components/FloatingInput.vue";
-import Toasts from "@/components/ToastContainer.vue";
+import Toasts from "@/components/ToastComponents/ToastContainer.vue";
 
 export default {
   components: {

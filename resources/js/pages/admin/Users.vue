@@ -6,6 +6,7 @@
             <span class="" >{{user.id}}</span>
             <span>{{user.name}}</span>
             <span>{{user.roles }}</span>
+            <span> User </span>
             <select id="roles_select" v-model="user.roles">
               <option v-for="role in roles" :key="role" >{{role.role_title}}</option>
             </select>

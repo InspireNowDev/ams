@@ -4,15 +4,22 @@
     <Topbar v-if="!userLoggedIn" />
     <DashBar v-else />
     <div class="container">
-      <router-view />
+      
+      <router-view v-slot="{ Component }">
+          <keep-alive>
+            <component :is="Component" :key="$route.fullPath"></component>
+          </keep-alive>
+      </router-view>
+<!-- 
+      <router-view /> -->
     </div>
   </div>
 </template>
 <script>
 //import { mapState } from "vuex";
 import Getter from "./components/GetterComponent.vue";
-import Topbar from "./components/TopBar.vue";
-import DashBar from "./components/DashboardTopbar.vue";
+import Topbar from "./components/TopbarComponents.vue/TopBar.vue";
+import DashBar from "./components/TopbarComponents.vue/DashboardTopbar.vue";
 import { mapActions } from 'vuex';
 
 export default {

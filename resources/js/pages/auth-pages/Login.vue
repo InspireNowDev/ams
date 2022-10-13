@@ -223,7 +223,7 @@ import { useRouter } from "vue-router";
 import { mapActions } from "vuex";
 import FloatingInput from "@/components/FloatingInput.vue";
 //import Toast from "@/components/toastMessages.vue";
-import Toasts from "@/components/ToastContainer.vue";
+import Toasts from "@/components/ToastComponents/ToastContainer.vue";
 
 export default {
   components: {
