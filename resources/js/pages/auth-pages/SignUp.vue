@@ -340,9 +340,10 @@ export default {
         // })
         .catch((error) => {
           this.errors_exist = true;
+        
           if (error.response.status === 422) {
             console.log(error);
-            //this.errors = error.response.data.errors || {};
+            this.errors = error.response.data.errors || {};
             this.emailMessage = error.response.data.errors.email[0];
             this.$store.commit("addToast", {
               title: "Hello Vuex!",

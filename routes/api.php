@@ -29,9 +29,9 @@ Route::post('/set-password-status/{id}/{token}', [AuthController::class, 'set_pa
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('get-user', [AuthController::class, 'userInfo']);
+    Route::apiResource('profiles', ProfileController::class);
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('roles', RoleController::class);
+    Route::get('users/roles/{id}', [UserController::class, 'getUserByRole']);
 });
 
-Route::apiResource('profiles', ProfileController::class);
-Route::apiResource('users', UserController::class);
-Route::apiResource('roles', RoleController::class);
-Route::get('users/roles/{id}', [UserController::class, 'getUserByRole']);

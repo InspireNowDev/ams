@@ -13,6 +13,7 @@
 import Getter from "./components/GetterComponent.vue";
 import Topbar from "./components/TopBar.vue";
 import DashBar from "./components/DashboardTopbar.vue";
+import { mapActions } from 'vuex';
 
 export default {
   components: {
@@ -27,7 +28,17 @@ export default {
     userLoggedIn() {
       return this.$store.state.userLoggedIn;
     },
+  
   },
+  created() {
+      this.fetchAccessToken();
+  },
+   methods: {
+    ...mapActions([
+      'fetchAccessToken'
+    ]),
+  },
+
 };
 </script>
 

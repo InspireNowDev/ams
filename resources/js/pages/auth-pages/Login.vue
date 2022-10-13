@@ -265,6 +265,10 @@ export default {
           this.$store.commit("token_set", response.data.access_token);
           this.$store.commit("role_set",response.data.role.role_title);
           this.$store.commit("setRemember",this.remember_me);
+          // get to local
+          localStorage.setItem('accessToken', response.data.access_token);
+          //this.$store.commit("loginStop", null);
+         
           this.myRouter.push("home");
         })
         .catch((error) => {

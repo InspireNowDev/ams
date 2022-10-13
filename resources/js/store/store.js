@@ -6,16 +6,20 @@ const store = createStore({
 
     state() {
         return {
-            userLoggedIn: false,//default false
+           
             userCredentials: {
                 name: "default name",
                 id: 0,
                 email: "",
             },
                 toasts: [],
-                login_token: "",
-                userRole: "user",
+                accessToken: null,
+                userLoggedIn: false,//default false
+                loggingIn: false,
+
+                loginError: null,//error on login
                 
+                userRole: "user",
                 user_remember: false,
             }
 
@@ -35,14 +39,26 @@ const store = createStore({
             state.userCredentials = userCredentials;
             state.userLoggedIn = true;
         },
+        loginStart: (state) => {
+            state.loggingIn = true;
+          },
+        loginStop(state, errorMessage){
+            state.userLoggedIn = false;
+            state.loginError = errorMessage;
+        },
+        updateAccessToken: (state, accessToken) => {
+        state.accessToken = accessToken;
+        },
+
+
         logout(state) {
             state.userLoggedIn = false;
             state.userCredentials = null;
             state.userRole = null;
-            state.login_token = null;
+            state.accessToken = null;
         },
-        token_set(state, login_token) {
-            state.login_token = login_token;
+        token_set(state, accessToken) {
+            state.accessToken = accessToken;
         },
         role_set(state, user_role) {
             state.userRole = user_role;
@@ -51,7 +67,11 @@ const store = createStore({
             state.user_remember = remember_me;
         },
         // set user array
-    
+    },
+    actions:{
+        fetchAccessToken({ commit }) {
+            commit('updateAccessToken', localStorage.getItem('accessToken'));
+          }
     },
     getters: {
         userID(state) {
@@ -67,7 +87,7 @@ const store = createStore({
             return state.userRole;
         },
         logToken(state) {
-            return state.login_token;
+            return state.accessToken;
         },
         userisLoggedIn(state) {
             return state.userLoggedIn;

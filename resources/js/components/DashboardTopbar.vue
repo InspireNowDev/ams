@@ -168,7 +168,7 @@ export default {
   data() {
     return {
       showMenu: false,
-      SuperAdminElements: [ "Home" , "profile" ,"admins", "roles", "users" ],
+      SuperAdminElements: [ "Home" , "profile" , "roles", "permissions" , "users" ],
       AdminElements: [ "Home" , "profile" , "roles" , "users"],
       UserElements: [ "Home" , "profile" ],
       activeTab: "welcome",
@@ -189,13 +189,9 @@ export default {
       //   console.log( axios.defaults.headers['Authorization'] );
       //   console.log( config.headers.Authorization );
 
-
-      //axios.defaults.headers['Authorization']  ='Bearer ' +this.$store.getters.logToken;
-
-      axios.post('/api/logout' 
-      // { headers: 
-      //         {"Authorization" : `Bearer ${token}`} }
-      ).then((response) => {
+      // set token bearer
+      axios.defaults.headers['Authorization']  ='Bearer ' +this.$store.getters.logToken;
+      axios.post('/api/logout').then((response) => {
       console.log(response.data);
         })
         .catch((errors) => {

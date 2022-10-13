@@ -35,19 +35,25 @@
        
         <ul class="w-auto ml-10 list-container">
             
-            <li  class="list-item table-header bg-slate-100"> <span  class="role_title px-5 w-36 "> Role Title</span> <span  class="role_description w-60 ">Role Description</span> <span  class="role_description">Permissions here</span></li>
+            <li  class="list-item table-header bg-slate-100"> <span  class="role_title px-5 w-36 "> Role Title</span> <span  class="role_description w-60 ">Role Description</span> </li>
              <span v-if="this.loading"> loading roles data</span>  
             <!-- list of permissions here -->
             <li v-for="role in roles" :key="role" class="list-item"  @dblclick="toggleEditMode">
-                <div class="flex flex-">
+                <div class="flex columns-edit">
                 <!-- <span>{{role.role_id}}</span> -->
-                    <span  v-if="!editMode" class="role_title px-5 w-36 ">{{role.role_title}}</span> <input v-show="editMode" type="text" v-model="role.role_title" @keyup.enter="editRole(role)"/>
-                    <span  v-if="!editMode" class="role_description ">{{role.role_desc}}</span> <input v-show="editMode" type="text" v-model="role.role_desc" @keyup.enter="editRole(role)"/>
+                    <span  v-if="!editMode" class="role_title px-5 w-36 ">{{role.role_title}}</span> <input v-show="editMode" type="text" v-model="role.role_title" class="editInputFields pl-4 mr-4 rounded">
+                    <span  v-if="!editMode" class="role_description ">{{role.role_desc}}</span> <input v-show="editMode" type="text" v-model="role.role_desc" class="editInputFields pl-4 mr-4 rounded w-full"/> 
+                    <!-- @keyup.enter="editRole(role)" @focusout="editRole(role)" -->
+                    <button  v-if="editMode" @click="editRole(role)" class="ml-auto group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600  py-2 px-4 text-sm font-medium text-white
+                                        hover:bg-indigo-700  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 editRoleBtn"  > Confirm </button>
                 </div>
             </li>
             <!-- <RolesList />  -->
             <li  v-if="this.load_newrole" class="list-item" > item being added... </li>
             <span v-show="editMode"> Edit mode </span>
+            <button v-show="editMode" @click = "exitEdit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600  py-2 px-4 text-sm
+                font-medium  text-white  hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
+                focus:ring-offset-2 addRoleBtn mr-auto ml-auto " > [Click to exit Edit mode] </button>
         </ul>
     </div>
 </template>
@@ -99,13 +105,6 @@ export default {
         },
         async editRole(role){
             console.log(role);
-             this.editMode = false;
-            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-            const config = {
-                    headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            }
-                    }
             const body = {
                   role_title : role.role_title,
                   role_desc  : role.role_desc  
@@ -119,7 +118,7 @@ export default {
                 console.log(error);
             })
             .finally(()=>{
-                console.log("successfull");
+                console.log("edit function fired");
             })
         },
         deleteRole(){
@@ -130,6 +129,9 @@ export default {
         },
         toggleEditMode(){
               this.editMode = true;
+        },
+        exitEdit(){
+                this.editMode = false;
         }
 
     },
@@ -164,6 +166,9 @@ export default {
 .addRoleBtn{
     width: 300px;
 }
+.editRoleBtn{
+  width: 100px;
+}
 .list-container{
     padding: 10px;
     width: 100%;
@@ -176,5 +181,9 @@ export default {
     border: 1px solid grey;
     width: 100%;
     text-align: left;
+    height: 50px;
+}
+.columns-edit{
+    width: 100%;
 }
 </style>
