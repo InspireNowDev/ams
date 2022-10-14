@@ -1,5 +1,6 @@
 <template>
     <div class="flex" >
+      
         <div class=" p-5">
             <button class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600  py-2 px-4 text-sm
                 font-medium
@@ -57,14 +58,18 @@
                     focus:ring-offset-2 addRoleBtn " > [Click to exit Edit mode] </button>
             </div>
         </ul>
+          
     </div>
+    <Toast class=""/>
 </template>
 <script>
 //import RolesList from './component/RolesList.vue'
+import Toast from '../../components/ToastComponents/ToastContainer.vue'
 
 export default {
     components:{
        // RolesList,
+       Toast
     },
     data() {
         return{
@@ -118,6 +123,11 @@ export default {
             })
             .catch((error)=>{
                 console.log(error);
+                this.$store.commit("addToast", {
+                    title: "unable to update",
+                    type: "danger",
+                    message: "Failed to update",
+                });
             })
             .finally(()=>{
                 console.log("edit function fired");

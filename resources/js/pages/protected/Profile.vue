@@ -13,10 +13,18 @@
           Edit Profile
         </template>
         <template v-slot:body>
-        <form>
-
-            <input type="text" placeholder="edit name" v-model="changedName">
+        <form  v-on:submit.prevent="editProfile()"> 
+          <div>
+            <label for=""> First name </label>
+            <input type="text" :placeholder="userName" v-model=" newDetails.name ">
+          </div>
+           <div>
+             <label for=""> Last Name </label>
+            <input type="email" :placeholder="userEmail" v-model=" newDetails.email ">
+          </div>
+           <button type="submit"> wtv</button>
         </form>
+       
       </template>
       </Modal>
     </div>
@@ -34,16 +42,41 @@ export default {
   data() {
     return {
       showModal: false,
-      changedName:'' 
+      changedName:'', 
+      profile: null,
+
+      newDetails:{
+            name :'',
+            email:'',
+      }
     };
   },
   methods:{
+      editProfile(){
+
+        // here is put call to change data of user
+        console.log(this.newDetails);
+
+        // down here is space to update in vuex
+          this.closeModal()
+      },
       openModal() {
         this.showModal = true;
       },
       closeModal() {
         this.showModal = false;
       }
-  }
+  },
+   computed: {
+    userName() {
+      return this.$store.getters.userName;
+    },
+    userEmail() {
+      return this.$store.getters.userEmail;
+    },
+    userRole() {
+      return this.$store.getters.userRole;
+    },
+  },
 };
 </script>

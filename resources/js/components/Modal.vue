@@ -1,4 +1,5 @@
 <template>
+ <!-- this page is only for modal stylings only -->
     <transition name="modal-fade">
         <div class="modal-backdrop" @click.self='close'>
             <div class="modal">
@@ -70,6 +71,8 @@
     overflow-x: auto;
     display: flex;
     flex-direction: column;
+    min-width: 500px;
+    text-align: left;
   }
 
   .modal-header,
@@ -80,13 +83,12 @@
 
   .modal-header {
     position: relative;
-    border-bottom: 1px solid #eeeeee;
+   
     color: #4AAE9B;
     justify-content: space-between;
   }
 
-  .modal-footer {
-    border-top: 1px solid #eeeeee;
+  .modal-footer { 
     flex-direction: column;
     justify-content: flex-end;
   }
