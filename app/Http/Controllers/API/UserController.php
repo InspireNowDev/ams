@@ -28,7 +28,8 @@ class UserController extends Controller
 
     public function getUserByRole($roleID)
     {
-        $users = User::where('roles','=', $roleID)->get();
+        //$users = User::where('roles','=', $roleID)->get();
+        $users = User::with('roles')->get();
         $role = app('App\Http\Controllers\API\RoleController')->getRole();
 
         return response()->json([
@@ -120,6 +121,19 @@ class UserController extends Controller
             'status' => true,
             'message' => "User updated successfully",
             'user' => $user,
+        ], 200);
+    }
+
+    public function updateUserRole(Request $request, User $user)
+    {
+        $users = User::findOrFail($user['id']);
+        $users->roles = $request->roles;
+        $users->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => "Role updated successfully",
+            'user' => $users,
         ], 200);
     }
 

@@ -5,10 +5,10 @@
             <div class="flex justify-between w-100% rounded border-2  border-gray-200 p-3">
             <span class="" >{{user.id}}</span>
             <span>{{user.name}}</span>
-            <span>{{user.roles }}</span>
+            <span>{{user.roles.role_title}}</span>
             <span> User </span>
             <select id="roles_select" v-model="user.roles">
-              <option v-for="role in roles" :key="role" >{{role.role_title}}</option>
+              <option v-for="role in roles" :key="role" :value="role.id">{{role.role_title}}</option>
             </select>
             <!-- <select name="" id="roles_select" v-model="this.admin.sub_role"><option :value="role" v-for="role in this.roles" :key="role" >{{role}}</option> </select> -->
             </div>

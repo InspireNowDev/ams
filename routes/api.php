@@ -33,5 +33,6 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('roles', RoleController::class);
     Route::get('users/roles/{id}', [UserController::class, 'getUserByRole']);
+    Route::put('users/roles/{user}', [UserController::class, 'updateUserRole']);
 });
 
