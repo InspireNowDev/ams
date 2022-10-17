@@ -29,7 +29,8 @@ class UserController extends Controller
     public function getUserByRole($roleID)
     {
         //$users = User::where('roles','=', $roleID)->get();
-        $users = User::with('roles')->get();
+        //$users = User::with('roles')->get();
+        $users = User::where('roles','>=', $roleID)->with('roles')->get();
         $role = app('App\Http\Controllers\API\RoleController')->getRole();
 
         return response()->json([
