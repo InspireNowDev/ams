@@ -8,7 +8,7 @@
             <span>{{user.roles.id}}</span>
             <span>{{roleTitle(user.roles.id)}} </span>
             
-            <select id="roles_select" v-model="user.roles.id">
+            <select id="roles_select" v-model="user.roles.id" @change="updateUser(user.id , user.roles.id)">
               <option v-for="role in roles" :key="role" :value="role.id">{{role.role_title}}</option>
             </select>
             <!-- <select name="" id="roles_select" v-model="this.admin.sub_role"><option :value="role" v-for="role in this.roles" :key="role" >{{role}}</option> </select> -->
@@ -44,6 +44,20 @@ export default {
      
    },
    methods:{
+    async updateUser(user_id, role_id){
+      console.log(user_id);
+      console.log(role_id);
+      const body = {
+                roles : role_id, 
+          } 
+       await axios.put("/api/users/roles/"+user_id , body )
+        .then((response) =>{
+            console.log(response);
+        })
+        .finally(()=>{
+            console.log("edit function fired");
+        })
+    },
     changedData(data){
       console.log(data);
     },
