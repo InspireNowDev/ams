@@ -21,12 +21,7 @@ export default{
             roles:[],
             features:[ "Edit","Add","Delete", "View User" ],
             feature_roles :[
-                { 
-                    feature_id: 1,
-                    feature_desc:" User can ask permission",
-                    role2: false,
-                    role3: false,
-                },
+                {  feature_id: 1, feature_desc:" User can ask permission", role2: false, role3: false},
                  { 
                     feature_id: 2,
                     feature_desc:" User can do whatever",

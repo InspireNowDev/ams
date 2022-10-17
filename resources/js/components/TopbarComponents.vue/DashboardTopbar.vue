@@ -134,9 +134,23 @@
           </router-link>
         </ul>
 
+       <button
+            @click="showUsers"
+            class="flex max-h-52 w-full overflow-auto py-2 pl-3 pr-9 text-sm font-semibold lg:inline-flex lg:w-32"
+        >
+            Users
+        </button>
+        <div
+            v-show="usersToggle"
+            class="mt-1 w-full rounded-xl bg-blue-100 py-2"
+        >
+            <a href="#" class="block mt-1 w-full rounded-xl bg- 
+                               blue-100 py-2">
+                Testing
+            </a>
+        </div>
       
-      
-        <button class="m-4" @click="logOut"><span class="">
+        <!-- <button class="m-4" @click="logOut"><span class="">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 483.336 483.336" style="enable-background:new 0 0 483.336 483.336;" xml:space="preserve">
                 <g>
                   <g>
@@ -144,7 +158,7 @@
                   </g> 
                 </g>
         </svg>
-        </span></button>
+        </span></button> -->
         
       </div>
     </div>
