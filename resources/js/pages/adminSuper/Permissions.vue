@@ -51,9 +51,6 @@ export default{
             .then((response) => {
             this.roles = response.data.role;
                 })
-            .catch((error) => {
-                console.log(error);
-                })
             .finally(() => {
                 this.loading = false;
                 });

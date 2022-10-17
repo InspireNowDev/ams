@@ -166,15 +166,6 @@ export default {
          
           this.myRouter.push("home");
         })
-        .catch((error) => {
-          this.$store.commit("addToast", {
-            title: "invalid credentials",
-            type: "danger",
-            message: "your password or username is incorrect",
-          });
-          //here can use the toast notification pane
-          this.message = "wrong password or username";
-        })
         .finally(() => {
           this.processing = false;
         });

@@ -140,7 +140,6 @@ export default {
             this.passwordMsg = "password set succesfully";
             this.myRouter.push({ name: "login" });
           })
-          .catch((error) => console.log(error.response))
           .finally(() => {
               this.processing = false;
             });

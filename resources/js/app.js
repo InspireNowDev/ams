@@ -20,16 +20,35 @@ axios.interceptors.request.use(
         return Promise.reject(error);
     },
 )
-// axios.interceptors.response.use(
-//     function(config){
-
-//         return config;
-//     },
-//     function(error){
-
-//         return Promise.reject(error);
-//     },
-// )
+ axios.interceptors.response.use(
+    function(config){
+        console.log(config);
+        return config;
+    },
+    function(error){
+        console.log(error);
+        if( error.response.request.status === 422 ){
+            store.commit("addToast", {
+                title: error.response.request.status,
+                type: "danger",
+                message: error.response.data.message,
+              });
+        }
+        else if ( error.response.request.status === 401 ){
+            store.commit("addToast", {
+                title: error.response.request.status,
+                type: "danger",
+                message: "Wrong Username or Password",
+              });
+        }
+        else {
+            console.log( error.response.request)
+        }
+      
+        
+        return Promise.reject(error);
+    },
+)
 
 //Vue.config.productionTip = false
 createApp(app)

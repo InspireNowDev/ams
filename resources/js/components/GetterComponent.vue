@@ -12,9 +12,6 @@ export default {
     //   //console.log(response.data.users)
     //   this.$store.commit("setUsers",response.data.users);
     //     })
-    // .catch((error) => {
-    //     console.log(error);
-    //     });
    
   },
 };

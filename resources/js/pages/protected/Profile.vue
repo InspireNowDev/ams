@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <UserCard />
+    <UserCard  />
     <!-- edit user here -->
     <div class="w-full bg-color align-left"> 
       <button   @click="openModal"> Edit </button>
@@ -15,16 +15,18 @@
         <template v-slot:body>
         <form  v-on:submit.prevent="editProfile()"> 
           <div>
-            <label for=""> First name </label>
+            <label for=""> First name </label> <br>
             <input type="text" :placeholder="userName" v-model=" newDetails.name ">
           </div>
            <div>
-             <label for=""> Last Name </label>
+             <label for=""> Last Name </label> <br>
             <input type="email" :placeholder="userEmail" v-model=" newDetails.email ">
           </div>
-           <button type="submit"> wtv</button>
+           <button type="submit"> Confirm </button>
         </form>
-       
+      </template>
+      <template>
+            <button @click="editProfile"> Confirm </button>
       </template>
       </Modal>
     </div>

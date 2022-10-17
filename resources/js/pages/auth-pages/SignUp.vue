@@ -334,27 +334,6 @@ export default {
           });
           //this.myRouter.push("set-password"); push to profilecreated  page
         })
-        // .catch(function (error) {
-        //   console.log("Show error notification!");
-        //   console.log(error.request);
-        // })
-        .catch((error) => {
-          this.errors_exist = true;
-        
-          if (error.response.status === 422) {
-            console.log(error);
-            this.errors = error.response.data.errors || {};
-            this.emailMessage = error.response.data.errors.email[0];
-            this.$store.commit("addToast", {
-              title: "Hello Vuex!",
-              type: "danger",
-              message: "email adress already taken",
-            });
-          } else {
-            console.log("error undefined (from FE)");
-          }
-          //tbc
-        })
         .finally(() => {
           this.processing = false;
         });

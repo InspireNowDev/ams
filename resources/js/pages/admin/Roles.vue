@@ -99,9 +99,6 @@ export default {
                 // catch response here and append to array
                  this.roles = [...this.roles, response.data.role ];
             })
-            .catch((error)=>{
-                console.log(error);
-            })
             .finally(() =>{
                 this.load_newrole = false;
             })
@@ -120,14 +117,6 @@ export default {
             await axios.put("api/roles/"+id,body)
             .then((response) =>{
                 console.log(response);
-            })
-            .catch((error)=>{
-                console.log(error);
-                this.$store.commit("addToast", {
-                    title: "unable to update",
-                    type: "danger",
-                    message: "Failed to update",
-                });
             })
             .finally(()=>{
                 console.log("edit function fired");
@@ -153,9 +142,6 @@ export default {
             await axios.get("/api/roles")
             .then((response) => {
             this.roles = response.data.role;
-                })
-            .catch((error) => {
-                console.log(error);
                 })
             .finally(() => {
                 this.loading = false;

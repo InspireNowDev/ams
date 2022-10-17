@@ -34,9 +34,6 @@ export default {
       this.users = response.data.users;
       this.roles = response.data.role;
         })
-    .catch((error) => {
-         console.log(error);
-        })
       .finally(() => {
           this.loading = false;
         });

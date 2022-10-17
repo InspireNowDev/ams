@@ -23,14 +23,14 @@
           </svg>
         </span>
       </div>
-      <div class="mt-6 w-fit mx-auto">
+      <!-- <div class="mt-6 w-fit mx-auto">
         <img
           src="https://api.lorem.space/image/face?w=120&h=120&hash=bart89fe"
           class="rounded-full w-28"
           alt="profile picture"
           srcset=""
         />
-      </div>
+      </div> -->
 
       <div class="mt-8">
         <h2 class="text-white font-bold text-2xl tracking-wide">
