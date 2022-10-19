@@ -3,6 +3,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\PermissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,5 +35,6 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('roles', RoleController::class);
     Route::get('users/roles/{id}', [UserController::class, 'getUserByRole']);
     Route::put('users/roles/{user}', [UserController::class, 'updateUserRole']);
+    Route::get('permissions', [PermissionController::class, 'index']);
 });
 

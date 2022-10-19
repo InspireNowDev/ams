@@ -23,8 +23,14 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
+        if(request()->isMethod('PUT')){
+            $role_title = 'required|max:255|unique:roles,role_title,'. $this->role->id;
+        }else{
+            $role_title = 'required|max:255|unique:roles';
+        }
+
         return [
-            'role_title' => 'required|max:255|unique:roles,role_title,'. $this->role->id, 
+            'role_title' => $role_title, 
             'role_desc' => 'required|max:255',
         ];
     }
