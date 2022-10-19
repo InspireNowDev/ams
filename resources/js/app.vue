@@ -1,12 +1,14 @@
 <template>
-  <div class="app-container">
+  <div class="app-container relative">
     <Getter />
     <Topbar v-if="!userLoggedIn" />
     <DashBar v-else />
+    <!-- //<Toast class="absolute top right-px" /> -->
     <div class="container">
       
       <router-view v-slot="{ Component }">
           <keep-alive>
+           
             <component :is="Component" :key="$route.fullPath"></component>
           </keep-alive>
       </router-view>
@@ -18,15 +20,17 @@
 <script>
 //import { mapState } from "vuex";
 import Getter from "./components/GetterComponent.vue";
-import Topbar from "./components/TopbarComponents.vue/TopBar.vue";
-import DashBar from "./components/TopbarComponents.vue/DashboardTopbar.vue";
+import Topbar from "./components/TopbarComponents/TopBar.vue";
+import DashBar from "./components/TopbarComponents/DashboardTopbar.vue";
 import { mapActions } from 'vuex';
+import Toast from "./components/ToastComponents/ToastContainer.vue"
 
 export default {
   components: {
     Getter,
     Topbar,
     DashBar,
+    Toast,
   },
   data() {
     return {};

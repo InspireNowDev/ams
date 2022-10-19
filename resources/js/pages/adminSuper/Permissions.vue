@@ -1,58 +1,81 @@
 <template>
   <!-- permissions page -->
-  <div class="flex flex-row">
-    <span class="ml-2 rounded bg-slate-100 p-4 w-"> Feature </span>
-    <div v-for= "role in roles"  :key="role" class="ml-2 rounded bg-slate-100 p-4 "> {{role.role_title}}</div>
-  </div>
-  <div v-for="permission in feature_roles" :key="permission"  class="flex flex-row">
+   <div class="text-left w-full font-semibold"> Permissions page </div>
+   <table class="border-separate border border-green-800  mt-5 w-full">
+            <thead class="bg-emerald-200 text-left">
+                <tr>
+                <th class="border border-green-600 font-semibold p-3">Permissions</th>
+                <th v-for= "role in roles" :key="role" class="border border-green-600 font-semibold  text-center p-3">{{role.role_title}}</th>
+                </tr>
+            </thead>
+            <tbody class="text-left">
+                <tr v-for="titleF in featureList" :key="titleF" class="h-8">
+                    <td class="border border-green-600 pl-3">{{titleF.persmission_title}}</td>
+                    <td class="border border-green-600 w-20 text-center" v-for="roles in permissions" :key="roles" v-show="titleF.id === roles.permission_id"><label :for="roles.status"></label><input type="checkbox" v-model="roles.status"/> </td>
+                </tr>
+            </tbody>
+    </table> 
+    <div class="w-full text-right">
+        <button @click="reset" class="rounded bg-green-200 p-4 pt-2 pb-2 m-3 mr-0">cancel</button>
+        <button @click="sendPermission" class="rounded bg-blue-200 p-4 pt-2 pb-2 m-3 mr-0">submit</button>
+        </div>
     
-    <span  v-for="(key, index) in Object.keys(permission)" :key="index" class="ml-2 rounded bg-slate-100 p-4 "><span v-if="key == 'feature_id' ">{{permission.feature_id}}</span>
-    <span v-else-if="key=='feature_desc'"> Permission: {{permission.feature_desc}}</span> <input v-else type="checkbox" v-model="permission[key]"/>
-         <!-- <span >{{key}} - {{permission[key]}} <input type="checkbox" v-model="permission[key]"/> </span> -->
-         </span>
-  </div>
-<button @click="outConsole"> CLICK</button>
-</template>
-<script>
+  
 
+</template>
+
+
+
+
+<script>
 export default{
     data() {
         return{
             roles:[],
-            features:[ "Edit","Add","Delete", "View User" ],
-            feature_roles :[
-                {  feature_id: 1, feature_desc:" User can ask permission", role2: false, role3: false},
-                 { 
-                    feature_id: 2,
-                    feature_desc:" User can do whatever",
-                    role1: true,
-                    role2: false,
-                },
-                 { 
-                    feature_id: 3,
-                    feature_desc:" User can download",
-                    role1: true,
-                    role2: false,
-                }
-            ]
+            initialData:[],
+            permissions:[],
+            featureList:[],
         }
 
     },
-    created(){
+    async created(){
 
         //get roles
 
-        axios.get("/api/roles")
+        await axios.get("/api/roles")
             .then((response) => {
             this.roles = response.data.role;
                 })
             .finally(() => {
                 this.loading = false;
                 });
+
+        await axios.get('api/permissions')
+        .then((response) => {
+            console.log(response.data)
+            this.permissions = response.data.feature;  
+            this.featureList = response.data.permission;
+        })
+         .finally(() => {
+        });
+        const initdata = this.permissions;
+        this.initialData = initdata;
     },
     methods:{
         outConsole(){
             console.log(this.feature_roles);
+        },
+        async sendPermission(){
+
+            await axios.post('api/permissions', this.permissions)
+            .then((response)=>{ console.log(response)})
+            .catch((error)=>{
+                console.log(error);
+            })
+        },
+        reset(){
+            console.log( this.initialData);
+            this.permissions = this.initialData;
         }
     }
 }

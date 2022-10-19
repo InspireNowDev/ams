@@ -90,6 +90,10 @@ export default {
   background-color: rgb(255, 156, 156);
   color: white;
 }
+.success {
+  background-color: rgb(195, 233, 194);
+  color: rgb(0, 0, 0);
+}
 .np-progress-loader{
     background-color: white;
 }

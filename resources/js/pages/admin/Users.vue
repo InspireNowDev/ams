@@ -1,7 +1,8 @@
 <template>
-<ul>
-  <span v-show="this.loading"> loading user data ...</span>
- <li v-for="user in  users" :key="user" class="w-100% justify-between m-3 ">
+  <Toast class="absolute"/>
+    <ul>
+      <span v-show="this.loading"> loading user data ...</span>
+        <li v-for="user in  users" :key="user" class="w-100% justify-between m-3 ">
             <div class="flex justify-between w-100% rounded border-2  border-gray-200 p-3">
             <span class="" >{{user.id}}</span>
             <span>{{user.name}}</span>
@@ -11,14 +12,17 @@
             <select id="roles_select" v-model="user.roles.id" @change="updateUser(user.id , user.roles.id)">
               <option v-for="role in roles" :key="role" :value="role.id">{{role.role_title}}</option>
             </select>
-            <!-- <select name="" id="roles_select" v-model="this.admin.sub_role"><option :value="role" v-for="role in this.roles" :key="role" >{{role}}</option> </select> -->
             </div>
         </li>
     </ul>
 </template>
 <script>
-//import axiosinstance from '@/axios/axiosinstance'
+import Toast from '@/components/ToastComponents/ToastContainer.vue'
+
 export default {
+  components:{
+    Toast,
+  },
   data() {
     return{
         users:[],
@@ -40,22 +44,20 @@ export default {
         });
 
    },
-   computed:{
-     
-   },
    methods:{
     async updateUser(user_id, role_id){
-      console.log(user_id);
-      console.log(role_id);
       const body = {
                 roles : role_id, 
           } 
        await axios.put("/api/users/roles/"+user_id , body )
         .then((response) =>{
-            console.log(response);
+             this.$store.commit("addToast", {
+                title: response.request.status,
+                type: "success",
+                message: response.data.message,
+              });
         })
         .finally(()=>{
-            console.log("edit function fired");
         })
     },
     changedData(data){
@@ -63,10 +65,7 @@ export default {
     },
     roleTitle(data){
       return this.roles.find(  role => role.id === data).role_title;
-       //caseFiles.find(cf => cf.id === state.activeCaseFile);
      }
-
-
    }
 
 }

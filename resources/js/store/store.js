@@ -98,7 +98,9 @@ const store = createStore({
     },
     setters: {
     },
-    plugins: [createPersistedState()]
+    plugins: [createPersistedState({
+        storage: window.sessionStorage,
+    })]
 })
 
 export default store;

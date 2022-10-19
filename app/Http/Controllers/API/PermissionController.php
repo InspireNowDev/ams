@@ -14,12 +14,14 @@ class PermissionController extends Controller
     {
         $role = Role::with('permissions')->get();
         //$permission = Permission::with('roles')->get();
-        $permission = DB::table('role_permission')->get();
+        $feature = DB::table('role_permission')->get();
+        $permission = Permission::all();
 
         return response()->json([
             'status' => true,
             'role' => $role,
-            'feature' => $permission
+            'feature' => $feature,
+            'permission' => $permission
         ]);
     }
 }
