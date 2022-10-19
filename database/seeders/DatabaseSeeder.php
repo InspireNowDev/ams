@@ -19,8 +19,12 @@ class DatabaseSeeder extends Seeder
             ProfileSeeder::class,
         ]);
  */
-        $this->call([
+        /* $this->call([
             RoleSeeder::class,
+        ]); */
+
+        $this->call([
+            PermissionSeeder::class,
         ]);
     }
 }

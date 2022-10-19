@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('role_id');
             $table->integer('permission_id');
             $table->boolean('status')->default(0);
-            /* $table->foreign('roles')->references('id')->on('roles'); */
+            $table->timestamps();
         });
     }
 
