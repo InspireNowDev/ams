@@ -11,16 +11,20 @@
             <tbody class="text-left">
                 <tr v-for="titleF in featureList" :key="titleF" class="h-8">
                     <td class="border border-green-600 pl-3">{{titleF.persmission_title}}</td>
-                    <td class="border border-green-600 w-20 text-center" v-for="roles in permissions" :key="roles" v-show="titleF.id === roles.permission_id"><label :for="roles.status"></label><input type="checkbox" v-model="roles.status"/> </td>
+                    <td class="border border-green-600 w-20 text-center" v-for="roles in permissions" :key="roles" v-show="titleF.id === roles.permission_id">{{roles.status}} <input type="checkbox" v-model="roles.status"  @click="toggleData(roles.status)"/> </td>
                 </tr>
             </tbody>
-    </table> 
+    </table>
+
+    <li v-for="titleF in permissions" :key="titleF" >
+        {{titleF}}
+    </li>
     <div class="w-full text-right">
         <button @click="reset" class="rounded bg-green-200 p-4 pt-2 pb-2 m-3 mr-0">cancel</button>
         <button @click="sendPermission" class="rounded bg-blue-200 p-4 pt-2 pb-2 m-3 mr-0">submit</button>
         </div>
-    
-  
+
+
 
 </template>
 
@@ -32,7 +36,7 @@ export default{
     data() {
         return{
             roles:[],
-            initialData:[],
+           // initialData:[],
             permissions:[],
             featureList:[],
         }
@@ -53,29 +57,35 @@ export default{
         await axios.get('api/permissions')
         .then((response) => {
             console.log(response.data)
-            this.permissions = response.data.feature;  
+            this.permissions = response.data.feature;
             this.featureList = response.data.permission;
         })
          .finally(() => {
         });
-        const initdata = this.permissions;
-        this.initialData = initdata;
+        // const initdata = this.permissions;
+        // this.initialData = initdata;
     },
     methods:{
         outConsole(){
             console.log(this.feature_roles);
         },
         async sendPermission(){
-
             await axios.post('api/permissions', this.permissions)
             .then((response)=>{ console.log(response)})
             .catch((error)=>{
                 console.log(error);
             })
         },
-        reset(){
-            console.log( this.initialData);
-            this.permissions = this.initialData;
+        // reset(){
+        //     console.log( this.initialData);
+        //     this.permissions = this.initialData;
+        // }
+        toggleData(data){
+ data = this.watchData;        }
+    },
+    computed:{
+        watchData(){
+            return this.roles.status;
         }
     }
 }
